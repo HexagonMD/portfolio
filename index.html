@@ -173,6 +173,30 @@
             transform: scale(1.05);
         }
 
+        /* プロフィール画像のクリック可能性を示すスタイル */
+        .profile-img::after {
+            content: '🔍';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: scale(0.8);
+        }
+
+        .profile-img:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         .name {
             font-size: 2.5em;
             font-weight: 700;
@@ -742,6 +766,81 @@
             transition: width 0.3s ease;
         }
 
+        /* プロフィール画像モーダル */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            animation: modalZoom 0.3s ease-out;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            max-height: 500px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            color: #333;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10001;
+        }
+
+        .modal-close:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        @keyframes modalZoom {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -803,6 +902,14 @@
             .tech-grid {
                 grid-template-columns: 1fr;
             }
+
+            .modal-close {
+                top: -30px;
+                right: -30px;
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -834,6 +941,14 @@
             .contact-item {
                 font-size: 1em;
             }
+
+            .modal-close {
+                top: -25px;
+                right: -25px;
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -860,7 +975,7 @@
         <!-- ホームページ -->
         <div id="home" class="page active">
             <div class="header">
-                <div class="profile-img">
+                <div class="profile-img" onclick="openImageModal()">
                     <img src="image.jpg" alt="森 大地" onerror="this.style.display='none'; this.parentNode.innerHTML='👤'; this.parentNode.style.display='flex';">
                 </div>
                 <h1 class="name">森 大地</h1>
@@ -880,7 +995,7 @@
                     <div class="section-content">
                         現在、ネットワークセキュリティとマルウェア解析を中心に学習しています。特にWebアプリケーションの脆弱性診断やペネトレーションテストに興味があり、実際にCTFにも積極的に参加しています。また、セキュアコーディングやインシデントレスポンスについても学んでいます。
                         <br><br>
-                        <strong>📖 詳細は「研究内容」ページをご覧ください</strong>
+                        <strong><a href="#" onclick="showPage('research')" style="color: #3498db; text-decoration: none;">📖 詳細は「研究内容」ページをご覧ください</a></strong>
                     </div>
                     <div class="skills">
                         <span class="skill-tag">ネットワークセキュリティ</span>
@@ -899,7 +1014,7 @@
                     <div class="section-content">
                         大学での授業に加えて、独学でセキュリティを学んでいます。CTF大会では地域大会で上位入賞の経験があり、チームでの協働も得意です。また、学内のセキュリティ研究会でリーダーを務め、後輩への指導も行っています。インターンシップでは実際の企業環境でのセキュリティ業務を経験しました。
                         <br><br>
-                        <strong>🏃‍♂️ 高校時代の活動は「これまでの歩み」ページをご覧ください</strong>
+                        <strong><a href="#" onclick="showPage('background')" style="color: #3498db; text-decoration: none;">🏃‍♂️ 高校時代の活動は「これまでの歩み」ページをご覧ください</a></strong>
                     </div>
                 </div>
 
@@ -1296,6 +1411,14 @@
         </div>
     </div>
 
+    <!-- 画像拡大モーダル -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeImageModal()" aria-label="閉じる">×</button>
+            <img src="image.jpg" alt="森 大地のプロフィール写真" class="modal-image" id="modalImage">
+        </div>
+    </div>
+
     <script>
         // ローディング画面の制御
         window.addEventListener('load', function() {
@@ -1303,6 +1426,53 @@
                 document.getElementById('loadingOverlay').classList.add('hidden');
             }, 1000);
         });
+
+        // 画像モーダル機能
+        function openImageModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const profileImg = document.querySelector('.profile-img img');
+            
+            // プロフィール画像が存在する場合はその画像を使用
+            if (profileImg && profileImg.style.display !== 'none') {
+                modalImage.src = profileImg.src;
+                modalImage.alt = profileImg.alt;
+            } else {
+                // フォールバック用の処理
+                modalImage.style.display = 'none';
+                const modalContent = document.querySelector('.modal-content');
+                modalContent.innerHTML = `
+                    <button class="modal-close" onclick="closeImageModal()" aria-label="閉じる">×</button>
+                    <div style="width: 300px; height: 300px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 120px; color: white; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);">👤</div>
+                `;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // スクロールを無効化
+            
+            // ESCキーで閉じる機能を追加
+            document.addEventListener('keydown', handleEscKey);
+        }
+
+        function closeImageModal(event) {
+            // モーダルの背景をクリックした場合のみ閉じる（event引数がある場合）
+            if (event && event.target !== event.currentTarget) {
+                return;
+            }
+            
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // スクロールを有効化
+            
+            // ESCキーイベントリスナーを削除
+            document.removeEventListener('keydown', handleEscKey);
+        }
+
+        function handleEscKey(event) {
+            if (event.key === 'Escape') {
+                closeImageModal();
+            }
+        }
 
         // スクロール進捗バーの制御
         window.addEventListener('scroll', function() {
@@ -1372,10 +1542,8 @@
             const profileImg = document.querySelector('.profile-img');
             if (profileImg) {
                 profileImg.addEventListener('click', function() {
-                    this.style.animation = 'none';
-                    setTimeout(() => {
-                        this.style.animation = 'pulse 0.6s ease-in-out';
-                    }, 10);
+                    // モーダルが開くのでここでのアニメーションは不要
+                    // ただし、ホバー効果は残す
                 });
             }
 
