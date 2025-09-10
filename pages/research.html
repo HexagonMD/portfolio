@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research - 森 大地</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <style>
+        /* Research Page Specific Styles */
+        .research-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--color-bg);
+            overflow: hidden;
+        }
+        
+        .research-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(255, 0, 102, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .research-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .research-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        
+        .research-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .research-subtitle {
+            font-size: 1.2rem;
+            color: var(--color-text-secondary);
+            max-width: 600px;
+        }
+        
+        .research-section {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .research-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+        
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .concept-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-accent-alt));
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        
+        .concept-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+        }
+        
+        .concept-number {
+            font-family: var(--font-mono);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--color-border);
+            margin-bottom: 1rem;
+        }
+        
+        .concept-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .concept-description {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .tech-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s;
+        }
+        
+        .tech-tag:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--color-border);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 1.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--color-bg);
+            border: 2px solid var(--color-accent);
+            border-radius: 50%;
+        }
+        
+        .timeline-item.active .timeline-dot {
+            background: var(--color-accent);
+        }
+        
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-meta {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .diagram {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 3rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .diagram-title {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            color: var(--color-accent);
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="grid-bg"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-logo">
+                <span class="logo-text">RESEARCH</span>
+            </div>
+            <a href="../index.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Back to Portfolio
+            </a>
+        </nav>
+    </header>
+
+    <!-- Research Hero -->
+    <section class="research-hero">
+        <div class="research-hero-content">
+            <div class="research-label">CURRENT RESEARCH</div>
+            <h1 class="research-title">
+                POMDP-based Multi-Agent<br>
+                Attack Modeling System
+            </h1>
+            <p class="research-subtitle">
+                部分観測マルコフ決定過程を基盤とした協調型マルチエージェント攻撃モデルの構築と、
+                次世代サイバーセキュリティ防御システムへの応用研究
+            </p>
+        </div>
+    </section>
+
+    <!-- Research Content -->
+    <div class="container">
+        <!-- Overview Section -->
+        <section class="research-section">
+            <div class="section-label">OVERVIEW</div>
+            <h2>研究概要</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
+                本研究は、単一エージェントのPOMDPモデルを協調型マルチエージェントシステム（MAS）へと拡張し、
+                複数のマルウェアが信念状態を共有しながら協調的に行動する高度な攻撃モデルの構築を目指しています。
+                これにより、現実の高度標的型攻撃（APT）をより正確にモデル化し、
+                効果的な防御戦略の開発につなげることを目的としています。
+            </p>
+        </section>
+
+        <!-- Key Concepts -->
+        <section class="research-section">
+            <div class="section-label">KEY CONCEPTS</div>
+            <h2>主要な研究要素</h2>
+            
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-number">01</div>
+                    <h3 class="concept-title">部分観測性</h3>
+                    <p class="concept-description">
+                        攻撃者は防御システムの完全な状態を観測できない環境下で、
+                        限られた情報から最適な行動を選択する必要があります。
+                    </p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-number">02</div>
+                    <h3 class="concept-title">信念状態共有</h3>
+                    <p class="concept-description">
+                        複数のエージェントが観測結果と信念状態を共有し、
+                        協調的な意思決定を実現するメカニズムを設計します。
+                    </p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-number">03</div>
+                    <h3 class="concept-title">通信最適化</h3>
+                    <p class="concept-description">
+                        エージェント間の通信頻度と量を最適化し、
+                        検知リスクを最小化しながら協調効果を最大化します。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Approach -->
+        <section class="research-section">
+            <div class="section-label">TECHNICAL APPROACH</div>
+            <h2>技術的アプローチ</h2>
+            
+            <div class="diagram">
+                <div class="diagram-title">SYSTEM ARCHITECTURE</div>
+                <pre style="font-family: var(--font-mono); color: var(--color-text-secondary); line-height: 1.4;">
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  Agent A    │────▶│  Belief     │◀────│  Agent B    │
+│  (POMDP)    │     │  Sharing    │     │  (POMDP)    │
+└─────────────┘     └─────────────┘     └─────────────┘
+       │                    │                    │
+       ▼                    ▼                    ▼
+┌─────────────────────────────────────────────────┐
+│           Target System Environment             │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
+│  │ Sensor  │  │ Defense │  │ Honeypot│        │
+│  └─────────┘  └─────────┘  └─────────┘        │
+└─────────────────────────────────────────────────┘
+                </pre>
+            </div>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">TensorFlow</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">POMDP Solver</span>
+                <span class="tech-tag">Multi-Agent RL</span>
+                <span class="tech-tag">Game Theory</span>
+                <span class="tech-tag">Network Simulation</span>
+            </div>
+        </section>
+
+        <!-- Research Timeline -->
+        <section class="research-section">
+            <div class="section-label">TIMELINE</div>
+            <h2>研究計画</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item active">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Phase 1: 基盤構築</h4>
+                        <p>POMDPモデルの実装と単体エージェントの意思決定アルゴリズム開発</p>
+                        <div class="timeline-meta">2025 Q1-Q2</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Phase 2: MAS拡張</h4>
+                        <p>マルチエージェントシステムへの拡張と信念状態共有メカニズムの設計</p>
+                        <div class="timeline-meta">2025 Q3-Q4</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Phase 3: 最適化</h4>
+                        <p>通信プロトコルの最適化と検知回避戦略の実装</p>
+                        <div class="timeline-meta">2026 Q1-Q2</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>Phase 4: 評価・検証</h4>
+                        <p>実環境シミュレーションと防御システムへの応用</p>
+                        <div class="timeline-meta">2026 Q3-Q4</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expected Impact -->
+        <section class="research-section">
+            <div class="section-label">EXPECTED IMPACT</div>
+            <h2>期待される成果</h2>
+            
+            <ul style="line-height: 1.8; color: var(--color-text-secondary); margin-top: 1rem;">
+                <li>高度標的型攻撃の振る舞いを予測する新しいモデルの確立</li>
+                <li>協調型マルウェアに対する効果的な防御戦略の開発</li>
+                <li>セキュリティシステムの脆弱性評価手法の改善</li>
+                <li>次世代EDR/XDRシステムへの実装可能な技術の提供</li>
+                <li>サイバーセキュリティ分野における機械学習応用の新たな知見</li>
+            </ul>
+        </section>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/animations.js"></script>
+</body>
+</html>

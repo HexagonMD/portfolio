@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background - 森 大地</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <style>
+        /* Background Page Specific Styles */
+        .journey-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .journey-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--color-border);
+        }
+        
+        .journey-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .journey-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .journey-subtitle {
+            font-size: 1.2rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .experience-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .experience-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .experience-year {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-accent);
+        }
+        
+        .experience-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .experience-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .stat-box {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--color-accent);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s;
+        }
+        
+        .stat-box:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-description {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .experience-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .content-block {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .content-block::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            opacity: 0.5;
+        }
+        
+        .content-block h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-block p {
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+        }
+        
+        .highlight-text {
+            color: var(--color-text);
+            font-weight: 500;
+        }
+        
+        .skill-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .skill-item {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-accent-alt));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+        
+        .skill-item:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: var(--color-border);
+            margin: 5rem 0;
+        }
+        
+        .quote-block {
+            padding: 3rem;
+            background: var(--color-surface);
+            border-left: 3px solid var(--color-accent);
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .quote-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .quote-author {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .experience-stats {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            
+            .stat-box {
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+    <div class="grid-bg"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-logo">
+                <span class="logo-text">BACKGROUND</span>
+            </div>
+            <a href="../index.html" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                Back to Portfolio
+            </a>
+        </nav>
+    </header>
+
+    <!-- Journey Hero -->
+    <section class="journey-hero">
+        <div class="journey-content">
+            <h1 class="journey-title">My Journey</h1>
+            <p class="journey-subtitle">
+                リーダーシップ、教育、技術の融合から生まれた独自のキャリアパス
+            </p>
+        </div>
+    </section>
+
+    <!-- Experience Sections -->
+    <div class="container">
+        <!-- High School Soccer -->
+        <section class="experience-section">
+            <div class="experience-header">
+                <span class="experience-year">2018-2021</span>
+                <h2 class="experience-title">高校サッカー部キャプテン</h2>
+            </div>
+            
+            <div class="experience-grid">
+                <div class="experience-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">100+</div>
+                        <div class="stat-description">部員数</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">#1</div>
+                        <div class="stat-description">歴代最高成績</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">3年間</div>
+                        <div class="stat-description">リーダー経験</div>
+                    </div>
+                </div>
+                
+                <div class="experience-content">
+                    <div class="content-block">
+                        <h3>大規模組織のマネジメント</h3>
+                        <p>
+                            3学年合わせて100名を超える部員を統率し、
+                            <span class="highlight-text">個々の特性を活かしたチーム戦術</span>を構築。
+                            データ分析を取り入れた戦術的アプローチで、
+                            従来の練習方法を根本から見直しました。
+                        </p>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3>目標達成への執念</h3>
+                        <p>
+                            県大会で<span class="highlight-text">高校史上初の快進撃</span>を実現。
+                            選手権大会では「あと一つ勝てばテレビ放映」という
+                            夢の舞台まであと一歩のところまで到達しました。
+                        </p>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3>獲得したスキル</h3>
+                        <div class="skill-matrix">
+                            <div class="skill-item">組織マネジメント</div>
+                            <div class="skill-item">戦略立案</div>
+                            <div class="skill-item">データ分析</div>
+                            <div class="skill-item">モチベーション管理</div>
+                            <div class="skill-item">プレッシャー下での意思決定</div>
+                            <div class="skill-item">コミュニケーション</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Teaching Experience -->
+        <section class="experience-section">
+            <div class="experience-header">
+                <span class="experience-year">2021-2024</span>
+                <h2 class="experience-title">集団塾講師</h2>
+            </div>
+            
+            <div class="experience-grid">
+                <div class="experience-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">3年間</div>
+                        <div class="stat-description">指導経験</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">最上位</div>
+                        <div class="stat-description">担当クラス</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">複数名</div>
+                        <div class="stat-description">最難関高校合格</div>
+                    </div>
+                </div>
+                
+                <div class="experience-content">
+                    <div class="content-block">
+                        <h3>個別最適化された集団指導</h3>
+                        <p>
+                            集団授業でありながら、
+                            <span class="highlight-text">生徒一人ひとりの学習特性を把握</span>し、
+                            理解度に応じた個別フォローを実施。
+                            苦手分野の克服から得意分野の伸長まで、
+                            きめ細かい指導を展開しました。
+                        </p>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3>成果の創出</h3>
+                        <p>
+                            2年目から<span class="highlight-text">最難関高校を目指す最上位クラス</span>を担当。
+                            高いレベルの授業運営と受験戦略の立案により、
+                            担当クラスから最難関高校への複数名合格を実現しました。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Part-time Job -->
+        <section class="experience-section">
+            <div class="experience-header">
+                <span class="experience-year">2022-PRESENT</span>
+                <h2 class="experience-title">居酒屋バイトリーダー</h2>
+            </div>
+            
+            <div class="experience-grid">
+                <div class="experience-stats">
+                    <div class="experience-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">2年目</div>
+                        <div class="stat-description">リーダー就任</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">20+</div>
+                        <div class="stat-description">指導スタッフ数</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">効率化</div>
+                        <div class="stat-description">オペレーション改善</div>
+                    </div>
+                </div>
+                
+                <div class="experience-content">
+                    <div class="content-block">
+                        <h3>実践的なマネジメント</h3>
+                        <p>
+                            接客スキルとチームワークが評価され、
+                            <span class="highlight-text">2年目からバイトリーダー</span>として
+                            新人教育や店舗運営の一翼を担当。
+                            忙しい時間帯の人員配置や業務分担を最適化し、
+                            効率的な店舗運営を実現しました。
+                        </p>
+                    </div>
+                    
+                    <div class="content-block">
+                        <h3>多様な顧客対応</h3>
+                        <p>
+                            年齢層や職業が様々なお客様に対し、
+                            <span class="highlight-text">適切なコミュニケーション</span>を図り、
+                            満足度の高いサービスを提供。
+                            トラブル対応や要望への柔軟な対応も実践しています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote Section -->
+        <div class="quote-block">
+            <p class="quote-text">
+                "一人では成し遂げられないことも、チーム一丸となれば必ず実現できる"
+            </p>
+            <p class="quote-author">— 高校時代に学んだ最も重要な教訓</p>
+        </div>
+
+        <!-- Skill Integration -->
+        <section class="experience-section">
+            <div class="experience-header">
+                <span class="experience-year">PRESENT</span>
+                <h2 class="experience-title">経験の統合と応用</h2>
+            </div>
+            
+            <div class="experience-content" style="max-width: 800px;">
+                <div class="content-block">
+                    <h3>セキュリティ研究への活用</h3>
+                    <p>
+                        サッカー部での<span class="highlight-text">戦術分析能力</span>を
+                        攻撃モデリングやマルチエージェントシステムの設計に応用。
+                        塾講師で培った<span class="highlight-text">説明力</span>により、
+                        複雑な技術概念を分かりやすく伝えることができます。
+                    </p>
+                </div>
+                
+                <div class="content-block">
+                    <h3>研究室でのリーダーシップ</h3>
+                    <p>
+                        大規模組織運営の経験を活かし、研究室でもリーダーとして活動。
+                        後輩一人ひとりに合わせた技術指導を実現し、
+                        <span class="highlight-text">チーム全体の研究力向上</span>に貢献しています。
+                    </p>
+                </div>
+                
+                <div class="content-block">
+                    <h3>将来への展望</h3>
+                    <p>
+                        これまでの多様な経験で培った
+                        <span class="highlight-text">継続的な努力と改善の姿勢</span>を、
+                        情報セキュリティ分野でも発揮。
+                        技術的専門性とマネジメント能力の両方を活かし、
+                        次世代のセキュリティプロフェッショナルとして
+                        社会に貢献していきます。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Skills Summary -->
+        <section class="experience-section" style="padding-bottom: 8rem;">
+            <h2 style="text-align: center; margin-bottom: 3rem;">統合されたスキルセット</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="stat-box" style="text-align: center;">
+                    <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Leadership</h3>
+                    <p style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                        100名規模の組織運営<br>
+                        目標達成への戦略立案<br>
+                        チームモチベーション管理
+                    </p>
+                </div>
+                
+                <div class="stat-box" style="text-align: center;">
+                    <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Education</h3>
+                    <p style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                        個別最適化された指導<br>
+                        複雑な概念の説明力<br>
+                        成果創出への責任感
+                    </p>
+                </div>
+                
+                <div class="stat-box" style="text-align: center;">
+                    <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Management</h3>
+                    <p style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                        実践的な現場運営<br>
+                        効率化とプロセス改善<br>
+                        多様な人材の育成
+                    </p>
+                </div>
+                
+                <div class="stat-box" style="text-align: center;">
+                    <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Technology</h3>
+                    <p style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                        セキュリティ専門知識<br>
+                        機械学習とAI応用<br>
+                        継続的な技術習得
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        // Page-specific animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate stat values on scroll
+            const statValues = document.querySelectorAll('.stat-value');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        
+                        // Add animation effect
+                        const originalText = entry.target.textContent;
+                        entry.target.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transition = 'opacity 0.5s';
+                            
+                            // Add a subtle scale effect
+                            entry.target.style.transform = 'scale(1.1)';
+                            setTimeout(() => {
+                                entry.target.style.transform = 'scale(1)';
+                            }, 300);
+                        }, 200);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            
+            statValues.forEach(stat => observer.observe(stat));
+            
+            // Parallax effect for hero section
+            const hero = document.querySelector('.journey-hero');
+            const heroTitle = document.querySelector('.journey-title');
+            
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const speed = 0.5;
+                
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * speed}px)`;
+                }
+                
+                if (heroTitle) {
+                    heroTitle.style.transform = `translateY(${scrolled * speed * 0.5}px)`;
+                    heroTitle.style.opacity = 1 - (scrolled / 500);
+                }
+            });
+            
+            // Add stagger animation to content blocks
+            const contentBlocks = document.querySelectorAll('.content-block');
+            
+            contentBlocks.forEach((block, index) => {
+                block.style.opacity = '0';
+                block.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    block.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    block.style.opacity = '1';
+                    block.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Skill items hover effect
+            const skillItems = document.querySelectorAll('.skill-item');
+            
+            skillItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.borderColor = 'var(--color-accent)';
+                    this.style.color = 'var(--color-accent)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.borderColor = 'var(--color-border)';
+                    this.style.color = 'var(--color-text)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

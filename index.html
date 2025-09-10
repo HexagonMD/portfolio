@@ -3,1586 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>森 大地 | セキュリティエンジニア志望</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ナビゲーションバー */
-        .navbar {
-            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar-brand {
-            color: white;
-            font-size: 1.2em;
-            font-weight: 600;
-        }
-
-        .navbar-nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: left 0.3s ease;
-        }
-
-        .nav-link:hover::before {
-            left: 0;
-        }
-
-        .nav-link:hover {
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: rgba(255, 255, 255, 0.2);
-            font-weight: 600;
-        }
-
-        /* ページコンテナ */
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateX(0px) translateY(0px); }
-            33% { transform: translateX(30px) translateY(-30px); }
-            66% { transform: translateX(-20px) translateY(20px); }
-        }
-
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            display: flex;  
-            align-items: center;  
-            justify-content: center; 
-            font-size: 48px;  
-            color: white;  
-            position: relative;
-            z-index: 2;
-            transition: transform 0.3s ease;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .profile-img img {  
-            width: 120%;
-            height: 120%;
-            object-fit: cover;
-            object-position: center top;
-            border-radius: 80%;
-            transform: scale(1.8);
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05);
-        }
-
-        .name {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .title {
-            font-size: 1.2em;
-            opacity: 0.9;
-            font-weight: 300;
-            position: relative;
-            z-index: 2;
-        }
-
-        .content {
-            padding: 40px 30px;
-        }
-
-        .section {
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        .section:nth-child(1) { animation-delay: 0.2s; }
-        .section:nth-child(2) { animation-delay: 0.4s; }
-        .section:nth-child(3) { animation-delay: 0.6s; }
-        .section:nth-child(4) { animation-delay: 0.8s; }
-        .section:nth-child(5) { animation-delay: 1.0s; }
-        .section:nth-child(6) { animation-delay: 1.2s; }
-
-        .section-title {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #3498db;
-            display: inline-block;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #e74c3c, #f39c12);
-            transition: width 0.3s ease;
-        }
-
-        .section:hover .section-title::after {
-            width: 100%;
-        }
-
-        .section-content {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #555;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .skill-tag {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-tag::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-        }
-
-        .skill-tag:hover::before {
-            left: 0;
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        .contact-info {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            transition: transform 0.2s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateX(5px);
-        }
-
-        .contact-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .contact-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            color: #3498db;
-        }
-
-        .contact-item a {
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-item a:hover {
-            color: #2980b9;
-            text-decoration: underline;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 30px;
-            background: #f8f9fa;
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        /* 資格・参加歴セクション */
-        .qualifications {
-            display: grid;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .qualification-item {
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 4px solid #3498db;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .qualification-item.featured {
-            background: linear-gradient(135deg, #e8f5e8, #d4edda);
-            border-left: 4px solid #28a745;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
-        }
-
-        .qualification-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .qualification-icon {
-            font-size: 2.5em;
-            margin-right: 20px;
-            min-width: 60px;
-            transition: transform 0.3s ease;
-        }
-
-        .qualification-item:hover .qualification-icon {
-            transform: scale(1.1);
-        }
-
-        .qualification-content h3 {
-            color: #2c3e50;
-            font-size: 1.2em;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .qualification-content p {
-            color: #666;
-            font-size: 0.9em;
-            margin: 0;
-        }
-
-        .qualification-item.featured .qualification-content h3 {
-            color: #155724;
-        }
-
-        .qualification-item.featured .qualification-content p {
-            color: #155724;
-            font-weight: 500;
-        }
-
-        .security-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-            margin-left: 10px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* 研究ページ専用スタイル */
-        .research-header {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
-
-        .research-title {
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .research-subtitle {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .research-section {
-            margin-bottom: 40px;
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #3498db;
-            transition: all 0.3s ease;
-        }
-
-        .research-section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .research-section h3 {
-            color: #2c3e50;
-            font-size: 1.4em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-        }
-
-        .highlight-box:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .tech-item {
-            background: #f8f9fa;
-            border: 2px solid #ecf0f1;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .tech-item:hover {
-            border-color: #3498db;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        /* タイムライン */
-        .achievement-timeline {
-            position: relative;
-            padding: 20px 0;
-        }
-
-        .achievement-timeline::before {
-            content: '';
-            position: absolute;
-            left: 30px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, #f39c12, #e67e22);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-            padding-left: 80px;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-item:hover {
-            transform: translateX(5px);
-        }
-
-        .timeline-item.highlight {
-            background: linear-gradient(135deg, #fff3cd, #ffeeba);
-            padding: 20px 20px 20px 80px;
-            border-radius: 10px;
-            border-left: 4px solid #f39c12;
-        }
-
-        .timeline-icon {
-            position: absolute;
-            left: 15px;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            z-index: 2;
-            transition: transform 0.3s ease;
-        }
-
-        .timeline-item:hover .timeline-icon {
-            transform: scale(1.1);
-        }
-
-        .timeline-content h4 {
-            color: #e67e22;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .timeline-content p {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* 経験詳細 */
-        .experience-details {
-            display: grid;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .detail-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #f39c12;
-            transition: all 0.3s ease;
-        }
-
-        .detail-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 3px 10px rgba(243, 156, 18, 0.2);
-        }
-
-        .detail-item h4 {
-            color: #e67e22;
-            margin-bottom: 8px;
-            font-size: 1em;
-        }
-
-        .detail-item p {
-            color: #555;
-            line-height: 1.5;
-            font-size: 0.95em;
-        }
-
-        /* 総合スキル */
-        .comprehensive-skills {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .skill-category {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #f39c12;
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.2);
-        }
-
-        .skill-category h4 {
-            color: #e67e22;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .skill-category ul {
-            padding-left: 20px;
-        }
-
-        .skill-category li {
-            margin-bottom: 8px;
-            color: #555;
-            line-height: 1.5;
-            transition: color 0.3s ease;
-        }
-
-        .skill-category:hover li {
-            color: #333;
-        }
-
-        /* 応用エリア */
-        .application-areas {
-            display: grid;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .application-item {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #f39c12;
-            transition: all 0.3s ease;
-        }
-
-        .application-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.2);
-        }
-
-        .application-item h4 {
-            color: #e67e22;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .application-item p {
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* ローディングアニメーション */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        .loading-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* スクロールバーのカスタマイズ */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #2980b9, #3498db);
-        }
-
-        /* プログレスバー */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #e74c3c, #f39c12, #3498db);
-            z-index: 1000;
-            transition: width 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-            
-            .navbar {
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 15px;
-                position: relative;
-            }
-            
-            .navbar-nav {
-                gap: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .header {
-                padding: 30px 20px;
-            }
-            
-            .name {
-                font-size: 2em;
-            }
-            
-            .content {
-                padding: 30px 20px;
-            }
-            
-            .skills {
-                justify-content: center;
-            }
-
-            .research-section {
-                padding: 20px;
-            }
-
-            .comprehensive-skills {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline-item {
-                padding-left: 60px;
-            }
-
-            .achievement-timeline::before {
-                left: 20px;
-            }
-
-            .timeline-icon {
-                left: 5px;
-                width: 25px;
-                height: 25px;
-                font-size: 1em;
-            }
-
-            .tech-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            .navbar-brand {
-                font-size: 1em;
-            }
-
-            .nav-link {
-                padding: 6px 12px;
-                font-size: 0.9em;
-            }
-
-            .name {
-                font-size: 1.8em;
-            }
-
-            .title {
-                font-size: 1em;
-            }
-
-            .section-title {
-                font-size: 1.2em;
-            }
-
-            .contact-item {
-                font-size: 1em;
-            }
-        }
-    </style>
+    <title>森 大地 | Security Engineer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- ローディング画面 -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-    </div>
+    <!-- Cursor Effect -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
-    <!-- プログレスバー -->
-    <div class="progress-bar" id="progressBar"></div>
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-logo">
+                <span class="logo-text">MORI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active" data-text="Home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-text="About">About</a></li>
+                <li><a href="#skills" class="nav-link" data-text="Skills">Skills</a></li>
+                <li><a href="#research" class="nav-link" data-text="Research">Research</a></li>
+                <li><a href="#contact" class="nav-link" data-text="Contact">Contact</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
 
-    <div class="container">
-        <!-- ナビゲーションバー -->
-        <div class="navbar">
-            <div class="navbar-brand">森 大地 - Portfolio</div>
-            <div class="navbar-nav">
-                <a class="nav-link active" onclick="showPage('home')">ホーム</a>
-                <a class="nav-link" onclick="showPage('research')">研究内容</a>
-                <a class="nav-link" onclick="showPage('background')">これまでの歩み</a>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-label">SECURITY ENGINEER</div>
+                <h1 class="hero-title">
+                    <span class="line">森 大地</span>
+                    <span class="line subtitle">DAICHI MORI</span>
+                </h1>
+                <p class="hero-description">
+                    東京電機大学 情報システム工学科 4年<br>
+                    筑波大学大学院 進学予定
+                </p>
+                <div class="hero-cta">
+                    <a href="#research" class="btn btn-primary">
+                        <span>View Research</span>
+                        <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">Contact</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="profile-container">
+                    <div class="profile-frame">
+                        <img src="assets/images/profile.jpg" alt="森 大地" class="profile-img">
+                        <div class="profile-overlay"></div>
+                    </div>
+                    <div class="floating-elements">
+                        <div class="float-element" data-speed="2">POMDP</div>
+                        <div class="float-element" data-speed="3">Security</div>
+                        <div class="float-element" data-speed="1.5">AI Agent</div>
+                        <div class="float-element" data-speed="2.5">Machine Learning</div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
 
-        <!-- ホームページ -->
-        <div id="home" class="page active">
-            <div class="header">
-                <div class="profile-img">
-                    <img src="image.jpg" alt="森 大地" onerror="this.style.display='none'; this.parentNode.innerHTML='👤'; this.parentNode.style.display='flex';">
-                </div>
-                <h1 class="name">森 大地</h1>
-                <p class="title">東京電機大学 情報システム工学科</p>
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">01</span>
+                    <span class="title-text">About Me</span>
+                </h2>
             </div>
-            
-            <div class="content">
-                <div class="section">
-                    <h2 class="section-title">自己紹介</h2>
-                    <div class="section-content">
-                        こんにちは！情報セキュリティに情熱を注いでいる大学4年生です。今後は筑波大学 情報理工学位プログラムへ進学を予定しており、情報セキュリティにおける実装力、新たな脅威への対応を身に着けていきたいと考えています。将来は情報セキュリティのプロフェッショナルとして、デジタル社会の安全を守る仕事に携わりたいと思っています。
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">学習・研究分野</h2>
-                    <div class="section-content">
-                        現在、ネットワークセキュリティとマルウェア解析を中心に学習しています。特にWebアプリケーションの脆弱性診断やペネトレーションテストに興味があり、実際にCTFにも積極的に参加しています。また、セキュアコーディングやインシデントレスポンスについても学んでいます。
-                        <br><br>
-                        <strong>📖 詳細は「研究内容」ページをご覧ください</strong>
-                    </div>
-                    <div class="skills">
-                        <span class="skill-tag">ネットワークセキュリティ</span>
-                        <span class="skill-tag">Webアプリケーション診断</span>
-                        <span class="skill-tag">マルウェア解析</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">C</span>
-                        <span class="skill-tag">Linux</span>
-                        <span class="skill-tag">ペネトレーションテスト</span>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">これまでの取り組み</h2>
-                    <div class="section-content">
-                        大学での授業に加えて、独学でセキュリティを学んでいます。CTF大会では地域大会で上位入賞の経験があり、チームでの協働も得意です。また、学内のセキュリティ研究会でリーダーを務め、後輩への指導も行っています。インターンシップでは実際の企業環境でのセキュリティ業務を経験しました。
-                        <br><br>
-                        <strong>🏃‍♂️ 高校時代の活動は「これまでの歩み」ページをご覧ください</strong>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">将来の目標</h2>
-                    <div class="section-content">
-                        情報セキュリティエンジニアとして企業のセキュリティ向上に貢献したいと考えています。特に、新しい脅威に対する防御手法の研究開発や、セキュリティ意識向上のための啓発活動にも取り組みたいです。将来的には、国際的なセキュリティコミュニティでも活躍できる人材になることを目指しています。
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">資格・参加歴</h2>
-                    <div class="qualifications">
-                        <div class="qualification-item featured">
-                            <div class="qualification-icon">🏕️</div>
-                            <div class="qualification-content">
-                                <h3>Security Camp 2025 Z3</h3>
-                                <p>セキュリティ用AI Agent開発ゼミ参加</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead">
+                        情報セキュリティに情熱を注ぐ大学4年生として、
+                        次世代のサイバーセキュリティ技術の研究開発に取り組んでいます。
+                    </p>
+                    <p>
+                        現在は部分観測マルコフ決定過程（POMDP）を用いた協調型マルチエージェント
+                        攻撃モデルの研究を進めており、筑波大学大学院への進学を通じて、
+                        より高度な脅威への対応能力を身につけることを目指しています。
+                    </p>
+                    <div class="achievements">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">🏕️</div>
+                            <div class="achievement-content">
+                                <h3>Security Camp 2025</h3>
+                                <p>AI Agent開発ゼミ参加予定</p>
                             </div>
                         </div>
-                        <div class="qualification-item">
-                            <div class="qualification-icon">💻</div>
-                            <div class="qualification-content">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">💻</div>
+                            <div class="achievement-content">
                                 <h3>基本情報技術者</h3>
-                                <p>IPA（情報処理推進機構）</p>
-                            </div>
-                        </div>
-                        <div class="qualification-item">
-                            <div class="qualification-icon">🌐</div>
-                            <div class="qualification-content">
-                                <h3>TOEIC 685点</h3>
-                                <p>English Proficiency Test</p>
+                                <p>2024年9月取得</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="section">
-                    <h2 class="section-title">連絡先</h2>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <span class="contact-icon">📧</span>
-                            <a href="mailto:dai10251227@gmail.com">dai10251227@gmail.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">🐙</span>
-                            <a href="https://github.com/HexagonMD" target="_blank">GitHub: HexagonMD</a>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">🔗</span>
-                            <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn Profile</a>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon">🏫</span>
-                            <span>東京電機大学 システムデザイン工学部 情報システム工学科</span>
-                        </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="100">0</div>
+                        <div class="stat-label">Team Members Led</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="3">0</div>
+                        <div class="stat-label">Years Teaching</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="685">0</div>
+                        <div class="stat-label">TOEIC Score</div>
                     </div>
                 </div>
-            </div>
-
-            <div class="footer">
-                <p>森 大地 | 最終更新: 2025年7月 | <a href="#" onclick="showPage('research')" style="color: #3498db;">研究内容を見る</a></p>
             </div>
         </div>
+    </section>
 
-        <!-- 研究内容ページ -->
-        <div id="research" class="page">
-            <div class="research-header">
-                <h1 class="research-title">🔬 研究内容・技術的取り組み</h1>
-                <p class="research-subtitle">Information Security Research & Technical Activities</p>
+    <!-- Skills Section -->
+    <section id="skills" class="section skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">02</span>
+                    <span class="title-text">Technical Skills</span>
+                </h2>
             </div>
-
-            <div class="content">
-                <a href="#" class="back-button" onclick="showPage('home')">
-                    ← ホームに戻る
-                </a>
-
-                <div class="research-section">
-                    <h3>🏆 研究成果・実績</h3>
-                    <ul>
-                        <li><strong>CTF大会での成果</strong>
-                            <ul>
-                                <li>地域CTF大会 チーム戦 上位10位入賞（2023年、2024年）</li>
-                                <li>大学内CTF 個人戦 3位入賞（2024年春季大会）</li>
-                                <li>Web、Crypto、Forensicsカテゴリで特に高得点を獲得</li>
-                                <li>チームリーダーとして戦略立案・メンバー指導を担当</li>
-                            </ul>
-                        </li>
-                        <li><strong>独自開発ツール・システム</strong>
-                            <ul>
-                                <li>Webアプリケーション脆弱性スキャナー（Python製、GUI付き）</li>
-                                <li>ログ解析自動化システム（Shell Script + Python）</li>
-                                <li>ネットワーク監視ダッシュボード（Java + Spring Boot + React）</li>
-                                <li>マルウェア分類支援ツール（機械学習ベース）</li>
-                            </ul>
-                        </li>
-                        <li><strong>学術・実務活動</strong>
-                            <ul>
-                                <li>学内セキュリティ研究会でのリーダーシップ（2023年〜現在）</li>
-                                <li>後輩向けセキュリティ基礎講座の企画・開催（月1回実施）</li>
-                                <li>地元企業との共同研究プロジェクトへの参加</li>
-                                <li>インターンシップでのセキュリティ監査業務経験</li>
-                            </ul>
-                        </li>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🔒</div>
+                        <h3>Security</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li>マルウェア解析</li>
+                        <li>ネットワークセキュリティ</li>
+                        <li>攻撃モデリング</li>
+                        <li>ペネトレーションテスト</li>
                     </ul>
-                </div>
-
-                <div class="research-section">
-                    <h3>🎯 主要研究分野</h3>
-                    <div class="highlight-box">
-                        <strong>ネットワークセキュリティ & ペネトレーションテスト</strong><br>
-                        企業ネットワークの脆弱性診断と侵入テストの手法を研究。特にOWASP Top 10の脆弱性について深く学習し、実際のWebアプリケーションに対する診断技術を習得しています。
-                    </div>
-                </div>
-
-                <div class="research-section">
-                    <h3>🔍 具体的な研究テーマ</h3>
-                    <ul>
-                        <li><strong>Webアプリケーション脆弱性診断</strong>
-                            <ul>
-                                <li>SQLインジェクション、XSS、CSRFなどの検出と対策手法の研究</li>
-                                <li>Burp Suite、OWASP ZAPを用いた自動診断ツールの活用と改良</li>
-                                <li>独自の脆弱性診断スクリプトをPythonで開発・実装</li>
-                                <li>脆弱性データベースの構築と分析</li>
-                            </ul>
-                        </li>
-                        <li><strong>マルウェア解析技術</strong>
-                            <ul>
-                                <li>静的解析：IDA Pro、Ghidraを用いたリバースエンジニアリング</li>
-                                <li>動的解析：仮想環境でのマルウェア挙動分析と検証</li>
-                                <li>ネットワークトラフィック解析によるC&C通信の検出技術</li>
-                                <li>機械学習を活用したマルウェア分類システムの研究</li>
-                            </ul>
-                        </li>
-                        <li><strong>インシデントレスポンス技術</strong>
-                            <ul>
-                                <li>ログ解析による侵入経路の特定と証跡保全</li>
-                                <li>フォレンジック技術を用いたデジタル証拠の収集・解析</li>
-                                <li>復旧手順の策定と自動化スクリプトの開発</li>
-                                <li>インシデント対応プロセスの最適化研究</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="research-section">
-                    <h3>💻 使用技術・ツール</h3>
-                    <div class="tech-grid">
-                        <div class="tech-item">
-                            <strong>プログラミング言語</strong><br>
-                            Python, Java, C/C++, Shell Script, JavaScript
-                        </div>
-                        <div class="tech-item">
-                            <strong>セキュリティツール</strong><br>
-                            Burp Suite, OWASP ZAP, Nmap, Metasploit, Wireshark
-                        </div>
-                        <div class="tech-item">
-                            <strong>解析ツール</strong><br>
-                            IDA Pro, Ghidra, OllyDbg, Volatility, YARA
-                        </div>
-                        <div class="tech-item">
-                            <strong>OS・環境</strong><br>
-                            Kali Linux, Ubuntu, CentOS, Windows, VMware, Docker
-                        </div>
-                        <div class="tech-item">
-                            <strong>データベース</strong><br>
-                            MySQL, PostgreSQL, MongoDB, Elasticsearch
-                        </div>
-                        <div class="tech-item">
-                            <strong>その他</strong><br>
-                            Git, Jenkins, Ansible, Terraform, AWS
-                        </div>
-                    </div>
-                </div>
-
-                <div class="research-section">
-                    <h3>🎯 今後の研究計画・目標</h3>
-                    <div class="highlight-box">
-                        <strong>セキュリティキャンプでの学習目標</strong><br>
-                        • 最新の脅威分析手法とゼロデイ攻撃への対応技術の習得<br>
-                        • AIを活用したセキュリティソリューションの研究開発<br>
-                        • 企業レベルのインシデント対応経験の蓄積と実践スキルの向上<br>
-                        • 国際的なセキュリティコミュニティとのネットワーク構築<br>
-                        • IoTセキュリティとクラウドセキュリティ分野への専門性拡張
-                    </div>
-                    
-                    <h3 style="margin-top: 25px;">🎓 大学院での研究予定</h3>
-                    <p>筑波大学 情報理工学位プログラムでは、<strong>「機械学習を活用したサイバー攻撃の早期検出システム」</strong>をテーマに研究を進める予定です。特に、異常検知アルゴリズムの改良と実環境での検証を通じて、実用的なセキュリティソリューションの開発を目指します。</p>
-                </div>
-
-                <div class="research-section">
-                    <h3>💡 将来のビジョン</h3>
-                    <p>情報セキュリティの分野で日本のサイバーセキュリティ向上に貢献できる人材となることを目指しています。技術力だけでなく、チームマネジメントや戦略的思考も身につけ、将来的にはセキュリティコンサルタントやCISOとして活躍したいと考えています。</p>
-                </div>
-
-                <a href="#" class="back-button" onclick="showPage('home')">
-                    ← ホームに戻る
-                </a>
-            </div>
-        </div>
-
-        <!-- これまでの歩みページ -->
-        <div id="background" class="page">
-            <div class="research-header" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
-                <h1 class="research-title">🏃‍♂️ これまでの歩み</h1>
-                <p class="research-subtitle">Journey Through High School & Leadership Experience</p>
-            </div>
-
-            <div class="content">
-                <a href="#" class="back-button" onclick="showPage('home')" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
-                    ← ホームに戻る
-                </a>
-
-                <div class="research-section">
-                    <h3>⚽ 高校サッカー部での挑戦</h3>
-                    <div class="highlight-box" style="background: linear-gradient(135deg, #fff3cd, #ffeeba); border-left: 4px solid #f39c12;">
-                        <strong>3学年100名規模の大組織を統率</strong><br>
-                        サッカー部キャプテンとして、3学年合わせて約100名という大規模な部活動組織をまとめ上げ、チーム一丸となって目標に向かって取り組む体制を構築しました。
-                    </div>
-                </div>
-
-                <div class="research-section">
-                    <h3>🏆 歴代最高成績への軌跡</h3>
-                    <div class="achievement-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-icon">👑</div>
-                            <div class="timeline-content">
-                                <h4>キャプテン就任</h4>
-                                <p>3学年100名の大所帯において、チーム統率とモチベーション向上に注力。練習の質的改善と選手間のコミュニケーション活性化を図る。</p>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-item">
-                            <div class="timeline-icon">🎯</div>
-                            <div class="timeline-content">
-                                <h4>チーム改革と戦略構築</h4>
-                                <p>従来の練習方法を見直し、データ分析を取り入れた戦術的アプローチを導入。個々の選手の特性を活かしたポジション配置とチーム戦術を確立。</p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item highlight">
-                            <div class="timeline-icon">🏅</div>
-                            <div class="timeline-content">
-                                <h4>歴代最高成績達成</h4>
-                                <p>県大会において高校史上初の快進撃を続け、ついに歴代最高成績を達成。チーム一丸となった努力が実を結んだ瞬間でした。</p>
-                            </div>
-                        </div>
-
-                        <div class="timeline-item">
-                            <div class="timeline-icon">📺</div>
-                            <div class="timeline-content">
-                                <h4>選手権大会での挑戦</h4>
-                                <p>最後の選手権大会では「あと一つ勝てばテレビ放映」という夢の舞台まであと一歩のところまで到達。惜しくも敗退となったが、チーム史に残る偉業を成し遂げました。</p>
-                            </div>
-                        </div>
+                    <div class="skill-level">
+                        <div class="level-bar" data-level="85"></div>
                     </div>
                 </div>
                 
-                <div class="research-section">
-                    <h3>📚 塾講師としての教育経験</h3>
-                    <div class="highlight-box" style="background: linear-gradient(135deg, #e8f4fd, #d6eaf8); border-left: 4px solid #3498db;">
-                        <strong>3年間の集団塾講師として個別アプローチを重視</strong><br>
-                        大学入学と同時に集団塾講師として活動を開始。一人ひとりの学習スタイルや理解度に合わせた個別アプローチを心がけ、2年目からは最上位クラスを担当。最難関高校への複数名合格を実現しました。
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🤖</div>
+                        <h3>AI/ML</h3>
                     </div>
-
-                    <div class="experience-details">
-                        <div class="detail-item">
-                            <h4>🎯 個別最適化された指導法</h4>
-                            <p>集団授業でありながら、生徒一人ひとりの学習特性を把握し、理解度に応じた個別フォローを実施。苦手分野の克服から得意分野の伸長まで、きめ細かい指導を展開。</p>
-                        </div>
-
-                        <div class="detail-item">
-                            <h4>🏆 最上位クラス担当（2年目〜）</h4>
-                            <p>指導力が認められ、2年目から最難関高校を目指す最上位クラスを担当。高いレベルの授業運営と受験戦略の立案を行い、生徒のモチベーション維持にも注力。</p>
-                        </div>
-
-                        <div class="detail-item">
-                            <h4>🌟 最難関高校複数名合格達成</h4>
-                            <p>担当クラスから最難関高校への複数名合格を実現。生徒の能力を最大限引き出す指導により、多くの生徒が目標を達成することができました。</p>
-                        </div>
+                    <ul class="skill-list">
+                        <li>POMDP</li>
+                        <li>強化学習</li>
+                        <li>マルチエージェントシステム</li>
+                        <li>異常検知</li>
+                    </ul>
+                    <div class="skill-level">
+                        <div class="level-bar" data-level="80"></div>
                     </div>
                 </div>
-
-                <div class="research-section">
-                    <h3>🍺 居酒屋アルバイトでのマネジメント経験</h3>
-                    <div class="highlight-box" style="background: linear-gradient(135deg, #fdf2e9, #fadbd8); border-left: 4px solid #e74c3c;">
-                        <strong>2年目からバイトリーダーとして店舗運営に貢献</strong><br>
-                        居酒屋でのアルバイトにおいて、接客スキルとチームワークが評価され、2年目からはバイトリーダーとして新人教育や店舗運営の一翼を担っています。多様なお客様への対応と円滑な店舗運営を実現。
+                
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">💻</div>
+                        <h3>Programming</h3>
                     </div>
-
-                    <div class="experience-details">
-                        <div class="detail-item">
-                            <h4>👥 新人教育・指導</h4>
-                            <p>新しく入ったアルバイトメンバーの教育を担当。接客マナーから調理補助まで、幅広い業務の指導を行い、早期戦力化を実現。</p>
-                        </div>
-
-                        <div class="detail-item">
-                            <h4>🎯 効率的なオペレーション構築</h4>
-                            <p>忙しい時間帯の人員配置や業務分担を最適化し、お客様をお待たせしない効率的な店舗運営を実現。チーム全体の生産性向上に貢献。</p>
-                        </div>
-
-                        <div class="detail-item">
-                            <h4>😊 多様な顧客対応</h4>
-                            <p>年齢層や職業が様々なお客様に対し、適切なコミュニケーションを図り、満足度の高いサービスを提供。トラブル対応や要望への柔軟な対応も実践。</p>
-                        </div>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li>TensorFlow/PyTorch</li>
+                        <li>Linux/Shell</li>
+                        <li>Git/Docker</li>
+                    </ul>
+                    <div class="skill-level">
+                        <div class="level-bar" data-level="90"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="research-section">
-                    <h3>🎖️ 多様な経験で培った総合力</h3>
-                    <div class="comprehensive-skills">
-                        <div class="skill-category">
-                            <h4>🏃‍♂️ サッカー部キャプテン</h4>
-                            <ul>
-                                <li><strong>大規模組織運営</strong>：100名規模のチーム統率</li>
-                                <li><strong>目標達成力</strong>：歴代最高成績の実現</li>
-                                <li><strong>逆境克服</strong>：困難な状況でのリーダーシップ</li>
-                                <li><strong>継続的努力</strong>：3年間の一貫した取り組み</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-category">
-                            <h4>📚 塾講師（3年間）</h4>
-                            <ul>
-                                <li><strong>個別最適化</strong>：生徒一人ひとりに合わせた指導</li>
-                                <li><strong>成果創出</strong>：最難関高校複数名合格</li>
-                                <li><strong>説明力</strong>：複雑な内容の分かりやすい解説</li>
-                                <li><strong>責任感</strong>：生徒の将来への強い責任意識</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-category">
-                            <h4>🍺 居酒屋バイトリーダー</h4>
-                            <ul>
-                                <li><strong>実践的マネジメント</strong>：現場レベルでの人材育成</li>
-                                <li><strong>顧客対応力</strong>：多様な年齢層への柔軟な対応</li>
-                                <li><strong>効率化推進</strong>：オペレーションの最適化</li>
-                                <li><strong>チームワーク</strong>：多職種との円滑な連携</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-category">
-                            <h4>🔒 セキュリティ研究</h4>
-                            <ul>
-                                <li><strong>技術的専門性</strong>：高度な技術知識の習得</li>
-                                <li><strong>論理的思考</strong>：複雑な問題の体系的解決</li>
-                                <li><strong>継続学習</strong>：最新技術への積極的対応</li>
-                                <li><strong>研究会運営</strong>：後輩指導と組織マネジメント</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="research-section">
-                    <h3>🔄 現在のセキュリティ分野への活かし方</h3>
-                    <div class="application-areas">
-                        <div class="application-item">
-                            <h4>🛡️ セキュリティ研究会でのリーダーシップ</h4>
-                            <p>サッカー部キャプテンとしての大規模組織運営経験を活かし、大学のセキュリティ研究会でもリーダーとして活動。塾講師での個別指導経験により、後輩一人ひとりに合わせた技術指導を実現しています。</p>
-                        </div>
-
-                        <div class="application-item">
-                            <h4>🏆 CTFチームでの戦略的思考</h4>
-                            <p>サッカーでの戦術分析能力をセキュリティ分野に応用。CTF大会では戦略的なアプローチとチーム連携により、効率的な問題解決を実現。塾講師で培った説明力で、チームメンバーへの知識共有も効果的に行っています。</p>
-                        </div>
-
-                        <div class="application-item">
-                            <h4>🤝 企業インターンでのチームワーク</h4>
-                            <p>居酒屋での多様な顧客対応経験により、企業環境でも様々なステークホルダーとの円滑なコミュニケーションを実現。プロジェクトの成功に向けたチーム一体感の醸成に貢献しました。</p>
-                        </div>
-
-                        <div class="application-item">
-                            <h4>📈 継続的な自己成長</h4>
-                            <p>これまでの全ての経験で共通している「継続的な努力と改善」の姿勢を、セキュリティ分野でも発揮。常に最新の脅威や技術をキャッチアップし、自己研鑽を続けています。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="research-section">
-                    <h3>💡 学んだこと・得られたもの</h3>
-                    <div class="highlight-box" style="background: linear-gradient(135deg, #fff3cd, #ffeeba); border-left: 4px solid #f39c12;">
-                        <p><strong>「一人では成し遂げられないことも、チーム一丸となれば必ず実現できる」</strong></p>
-                        <br>
-                        <p>高校サッカー部での3年間は、技術面での成長はもちろんのこと、人として大きく成長できた貴重な期間でした。100名という大きな組織をまとめ上げ、歴代最高成績という目標を達成した経験は、現在の情報セキュリティ分野での学習や将来のキャリアにおいても、必ず活かせる財産だと確信しています。</p>
-                        <br>
-                        <p>困難に直面しても諦めない心、チームワークの大切さ、そして責任感を持ってリーダーシップを発揮することの重要性を学びました。これらの経験を糧に、情報セキュリティのプロフェッショナルとして社会に貢献していきます。</p>
-                    </div>
-                </div>
-
-                <a href="#" class="back-button" onclick="showPage('home')" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
-                    ← ホームに戻る
+    <!-- Research Section (Preview) -->
+    <section id="research" class="section research-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">03</span>
+                    <span class="title-text">Research</span>
+                </h2>
+            </div>
+            <div class="research-hero">
+                <h3 class="research-title">
+                    POMDP-based Multi-Agent<br>
+                    Attack Modeling Research
+                </h3>
+                <p class="research-description">
+                    部分観測マルコフ決定過程を用いた協調型マルチエージェント攻撃モデルの研究
+                </p>
+                <a href="pages/research.html" class="btn btn-primary">
+                    <span>詳細を見る</span>
+                    <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
+                    </svg>
                 </a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // ローディング画面の制御
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').classList.add('hidden');
-            }, 1000);
-        });
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">04</span>
+                    <span class="title-text">Contact</span>
+                </h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <a href="mailto:info@mail.daichi-mori.net" class="contact-item">
+                        <span class="contact-label">Email</span>
+                        <span class="contact-value">info@mail.daichi-mori.net</span>
+                    </a>
+                    <a href="https://github.com/HexagonMD" target="_blank" class="contact-item">
+                        <span class="contact-label">GitHub</span>
+                        <span class="contact-value">@HexagonMD</span>
+                    </a>
+                    <div class="contact-item">
+                        <span class="contact-label">University</span>
+                        <span class="contact-value">東京電機大学</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // スクロール進捗バーの制御
-        window.addEventListener('scroll', function() {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercent = (scrollTop / scrollHeight) * 100;
-            document.getElementById('progressBar').style.width = scrollPercent + '%';
-        });
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Daichi Mori. All rights reserved.</p>
+        </div>
+    </footer>
 
-        // ページ切り替え機能（改良版）
-        function showPage(pageId) {
-            // すべてのページを非表示
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // すべてのナビリンクのactiveクラスを削除
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // 指定されたページを表示
-            document.getElementById(pageId).classList.add('active');
-            
-            // 対応するナビリンクにactiveクラスを追加
-            const targetNavLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
-            if (targetNavLink) {
-                targetNavLink.classList.add('active');
-            }
-            
-            // ページトップにスクロール
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // ページ変更をアナリティクスに送信（実装例）
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'page_view', {
-                    page_title: pageId,
-                    page_location: window.location.href + '#' + pageId
-                });
-            }
-        }
-
-        // 改良されたインタラクション
-        document.addEventListener('DOMContentLoaded', function() {
-            // Intersection Observer for animations
-            const sections = document.querySelectorAll('.section, .research-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.transform = 'translateY(0)';
-                        entry.target.style.opacity = '1';
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // プロフィール画像のクリックエフェクト
-            const profileImg = document.querySelector('.profile-img');
-            if (profileImg) {
-                profileImg.addEventListener('click', function() {
-                    this.style.animation = 'none';
-                    setTimeout(() => {
-                        this.style.animation = 'pulse 0.6s ease-in-out';
-                    }, 10);
-                });
-            }
-
-            // スキルタグのクリックイベント
-            const skillTags = document.querySelectorAll('.skill-tag');
-            skillTags.forEach(tag => {
-                tag.addEventListener('click', function() {
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'translateY(-2px)';
-                    }, 150);
-                });
-            });
-
-            // 資格アイテムのクリック効果
-            const qualificationItems = document.querySelectorAll('.qualification-item');
-            qualificationItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const icon = this.querySelector('.qualification-icon');
-                    icon.style.transform = 'rotate(360deg) scale(1.2)';
-                    setTimeout(() => {
-                        icon.style.transform = 'scale(1)';
-                    }, 600);
-                });
-            });
-
-            // テックアイテムのホバー効果強化
-            const techItems = document.querySelectorAll('.tech-item');
-            techItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    this.style.background = 'linear-gradient(135deg, #f8f9fa, #e9ecef)';
-                });
-                
-                item.addEventListener('mouseleave', function() {
-                    this.style.background = '#f8f9fa';
-                });
-            });
-
-            // スムーズなページ内リンク
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // キーボードナビゲーション
-            document.addEventListener('keydown', function(e) {
-                if (e.altKey) {
-                    switch(e.key) {
-                        case '1':
-                            showPage('home');
-                            break;
-                        case '2':
-                            showPage('research');
-                            break;
-                        case '3':
-                            showPage('background');
-                            break;
-                    }
-                }
-            });
-
-            // パフォーマンス最適化：画像の遅延読み込み
-            const images = document.querySelectorAll('img[data-src]');
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        imageObserver.unobserve(img);
-                    }
-                });
-            });
-
-            images.forEach(img => imageObserver.observe(img));
-
-            // フォームのバリデーション（将来の拡張用）
-            const forms = document.querySelectorAll('form');
-            forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // フォーム処理のロジックをここに追加
-                });
-            });
-
-            // ダークモード切り替え（将来の機能）
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('click', function() {
-                    document.body.classList.toggle('dark-mode');
-                    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-                });
-
-                // ダークモードの設定を復元
-                if (localStorage.getItem('darkMode') === 'true') {
-                    document.body.classList.add('dark-mode');
-                }
-            }
-
-            // アニメーションの最適化
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-            if (prefersReducedMotion.matches) {
-                // アニメーションを無効化
-                document.querySelectorAll('*').forEach(el => {
-                    el.style.animationDuration = '0.01ms !important';
-                    el.style.animationDelay = '0.01ms !important';
-                    el.style.transitionDuration = '0.01ms !important';
-                    el.style.transitionDelay = '0.01ms !important';
-                });
-            }
-
-            // ページビューのトラッキング
-            const trackPageView = (pageName) => {
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'page_view', {
-                        page_title: pageName,
-                        page_location: window.location.href,
-                        custom_map: {'dimension1': pageName}
-                    });
-                }
-            };
-
-            // 初期ページビューをトラッキング
-            trackPageView('home');
-        });
-
-        // ユーティリティ関数
-        const utils = {
-            // デバウンス関数
-            debounce: function(func, wait, immediate) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => {
-                        timeout = null;
-                        if (!immediate) func(...args);
-                    };
-                    const callNow = immediate && !timeout;
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                    if (callNow) func(...args);
-                };
-            },
-
-            // スロットル関数
-            throttle: function(func, limit) {
-                let inThrottle;
-                return function() {
-                    const args = arguments;
-                    const context = this;
-                    if (!inThrottle) {
-                        func.apply(context, args);
-                        inThrottle = true;
-                        setTimeout(() => inThrottle = false, limit);
-                    }
-                };
-            }
-        };
-
-        // リサイズイベントの最適化
-        window.addEventListener('resize', utils.debounce(function() {
-            // レスポンシブ対応の処理
-            const isMobile = window.innerWidth <= 768;
-            document.body.classList.toggle('mobile', isMobile);
-        }, 250));
-
-        // スクロールイベントの最適化
-        window.addEventListener('scroll', utils.throttle(function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // ナビバーの背景透明度調整
-            const navbar = document.querySelector('.navbar');
-            if (navbar) {
-                const opacity = Math.min(scrollTop / 100, 1);
-                navbar.style.backgroundColor = `rgba(52, 73, 94, ${0.9 + opacity * 0.1})`;
-            }
-            
-            // スクロールプログレス更新
-            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / scrollHeight) * 100;
-            document.getElementById('progressBar').style.width = scrollPercent + '%';
-        }, 16));
-
-        // エラーハンドリング
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-            // エラーレポートの送信（実装例）
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'exception', {
-                    description: e.error.toString(),
-                    fatal: false
-                });
-            }
-        });
-
-        // 未処理のPromiseリジェクションのハンドリング
-        window.addEventListener('unhandledrejection', function(e) {
-            console.error('Unhandled promise rejection:', e.reason);
-            e.preventDefault();
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/animations.js"></script>
 </body>
 </html>
