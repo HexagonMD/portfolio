@@ -47,12 +47,7 @@ class Navigation {
                 this.nav.classList.remove('scrolled');
             }
 
-            // Hide/show on scroll
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                this.nav.style.transform = 'translateY(-100%)';
-            } else {
-                this.nav.style.transform = 'translateY(0)';
-            }
+            
 
             lastScroll = currentScroll;
         });
