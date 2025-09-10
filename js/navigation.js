@@ -95,7 +95,13 @@ class Navigation {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const id = entry.target.getAttribute('id');
-                const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                let navLink;
+
+                if (id === 'background-preview') {
+                    navLink = document.querySelector('.nav-link[href="pages/background.html"]');
+                } else {
+                    navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                }
                 
                 if (entry.isIntersecting && navLink) {
                     // Remove active from all links
