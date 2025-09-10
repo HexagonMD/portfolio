@@ -7,6 +7,7 @@ const App = {
         this.initCounters();
         this.initSkillBars();
         this.initLightbox(); // New call
+        this.initScrollIndicatorVisibility();
     },
 
     // Custom Cursor
@@ -156,6 +157,28 @@ const App = {
                 lightbox.style.display = 'none';
             }
         });
+    },
+
+    // Scroll Indicator Visibility
+    initScrollIndicatorVisibility() {
+        const heroSection = document.getElementById('home');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+
+        if (!heroSection || !scrollIndicator) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    scrollIndicator.style.display = 'flex';
+                } else {
+                    scrollIndicator.style.display = 'none';
+                }
+            });
+        }, {
+            threshold: 0.1 // Adjust as needed
+        });
+
+        observer.observe(heroSection);
     }
 };
 
