@@ -103,11 +103,14 @@ class Navigation {
                     navLink = document.querySelector(`.nav-link[href="#${id}"]`);
                 }
                 
-                if (entry.isIntersecting && navLink) {
-                    // Remove active from all links
-                    this.navLinks.forEach(link => link.classList.remove('active'));
-                    // Add active to current link
-                    navLink.classList.add('active');
+                if (navLink) { // Ensure navLink exists
+                    if (entry.isIntersecting) {
+                        // Add active to current link
+                        navLink.classList.add('active');
+                    } else {
+                        // Remove active from current link when it leaves view
+                        navLink.classList.remove('active');
+                    }
                 }
             });
         }, observerOptions);
