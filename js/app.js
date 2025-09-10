@@ -156,16 +156,3 @@ document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
 
-// Add reveal classes to elements
-document.addEventListener('DOMContentLoaded', () => {
-    // Add reveal animations to sections
-    document.querySelectorAll('.section').forEach((section, index) => {
-        section.classList.add('reveal');
-        section.style.transitionDelay = `${index * 0.1}s`;
-    });
-
-    // Add stagger animations to cards
-    document.querySelectorAll('.skill-card, .achievement-card').forEach((card, index) => {
-        card.classList.add('stagger-item');
-    });
-});

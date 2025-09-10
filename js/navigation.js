@@ -69,6 +69,9 @@ class Navigation {
                     const targetSection = document.querySelector(targetId);
                     
                     if (targetSection) {
+                        // Ensure the target section is visible before scrolling
+                        targetSection.classList.add('active');
+
                         const offset = 80;
                         const targetPosition = targetSection.offsetTop - offset;
                         
