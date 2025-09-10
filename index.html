@@ -123,6 +123,14 @@
                             </div>
                         </div>
                     </div>
+                    <div style="margin-top: 2rem; text-align: right;">
+                        <a href="pages/background.html" class="btn btn-secondary">
+                            <span>My Journey</span>
+                            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" style="transform: rotate(-45deg);">
+                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
                 <div class="about-stats">
                     <div class="stat-item">
@@ -205,6 +213,63 @@
 
     <!-- Research Section (Preview) -->
     <section id="research" class="section research-preview">
+        <style>
+            /* Research Page Specific Styles */
+            .concept-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+                margin-top: 3rem; /* Adjusted margin */
+            }
+            
+            .concept-card {
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                padding: 2rem;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s;
+            }
+            
+            .concept-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, var(--color-accent), var(--color-accent-alt));
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            
+            .concept-card:hover::before {
+                transform: translateX(0);
+            }
+            
+            .concept-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--color-accent);
+            }
+            
+            .concept-number {
+                font-family: var(--font-mono);
+                font-size: 3rem;
+                font-weight: 900;
+                color: var(--color-border);
+                margin-bottom: 1rem;
+            }
+            
+            .concept-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .concept-description {
+                color: var(--color-text-secondary);
+                line-height: 1.6;
+            }
+        </style>
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">
@@ -220,12 +285,54 @@
                 <p class="research-description">
                     部分観測マルコフ決定過程を用いた協調型マルチエージェント攻撃モデルの研究
                 </p>
+                <!-- The "詳細を見る" button is kept -->
                 <a href="pages/research.html" class="btn btn-primary">
                     <span>詳細を見る</span>
                     <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
                     </svg>
                 </a>
+            </div>
+
+            <!-- Added Research Overview -->
+            <div style="margin-top: 4rem;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">研究概要</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text-secondary);">
+                    本研究は、単一エージェントのPOMDPモデルを協調型マルチエージェントシステム（MAS）へと拡張し、
+                    複数のマルウェアが信念状態を共有しながら協調的に行動する高度な攻撃モデルの構築を目指しています。
+                    これにより、現実の高度標的型攻撃（APT）をより正確にモデル化し、
+                    効果的な防御戦略の開発につなげることを目的としています。
+                </p>
+            </div>
+
+            <!-- Added Key Concepts -->
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-number">01</div>
+                    <h3 class="concept-title">部分観測性</h3>
+                    <p class="concept-description">
+                        攻撃者は防御システムの完全な状態を観測できない環境下で、
+                        限られた情報から最適な行動を選択する必要があります。
+                    </p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-number">02</div>
+                    <h3 class="concept-title">信念状態共有</h3>
+                    <p class="concept-description">
+                        複数のエージェントが観測結果と信念状態を共有し、
+                        協調的な意思決定を実現するメカニズムを設計します。
+                    </p>
+                </div>
+                
+                <div class="concept-card">
+                    <div class="concept-number">03</div>
+                    <h3 class="concept-title">通信最適化</h3>
+                    <p class="concept-description">
+                        エージェント間の通信頻度と量を最適化し、
+                        検知リスクを最小化しながら協調効果を最大化します。
+                    </p>
+                </div>
             </div>
         </div>
     </section>
