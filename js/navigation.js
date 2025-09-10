@@ -61,19 +61,24 @@ class Navigation {
     handleSmoothScroll() {
         this.navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
                 const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
                 
-                if (targetSection) {
-                    const offset = 80;
-                    const targetPosition = targetSection.offsetTop - offset;
+                // Only handle smooth scroll for internal anchor links (starting with #)
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(targetId);
                     
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    if (targetSection) {
+                        const offset = 80;
+                        const targetPosition = targetSection.offsetTop - offset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
+                // External links (like pages/*.html) will work normally without preventDefault
             });
         });
     }
