@@ -6,6 +6,7 @@ const App = {
         // this.initRevealAnimations(); // Removed
         this.initCounters();
         this.initSkillBars();
+        this.initLightbox(); // New call
     },
 
     // Custom Cursor
@@ -130,6 +131,31 @@ const App = {
         });
 
         bars.forEach(bar => observer.observe(bar));
+    },
+
+    // Lightbox functionality
+    initLightbox() {
+        const profileImg = document.getElementById('profile-img-clickable');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.lightbox-close');
+
+        if (!profileImg || !lightbox || !lightboxImg || !closeBtn) return;
+
+        profileImg.addEventListener('click', () => {
+            lightbox.style.display = 'block';
+            lightboxImg.src = profileImg.src;
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
     }
 };
 

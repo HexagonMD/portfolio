@@ -34,6 +34,7 @@
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link active" data-text="Home">Home</a></li>
                 <li><a href="#about" class="nav-link" data-text="About">About</a></li>
+                <li><a href="pages/background.html" class="nav-link" data-text="Background">Background</a></li>
                 <li><a href="#skills" class="nav-link" data-text="Skills">Skills</a></li>
                 <li><a href="#research" class="nav-link" data-text="Research">Research</a></li>
                 <li><a href="#contact" class="nav-link" data-text="Contact">Contact</a></li>
@@ -71,7 +72,7 @@
             <div class="hero-visual">
                 <div class="profile-container">
                     <div class="profile-frame">
-                        <img src="assets/images/image.jpg" alt="森 大地" class="profile-img">
+                        <img src="assets/images/image.jpg" alt="森 大地" class="profile-img" id="profile-img-clickable" style="cursor: pointer;">
                         <div class="profile-overlay"></div>
                     </div>
                     <div class="floating-elements">
@@ -279,5 +280,11 @@
     <script src="js/app.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/animations.js"></script>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
 </body>
 </html>
