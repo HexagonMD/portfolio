@@ -3,7 +3,7 @@ const App = {
     init() {
         this.initCursor();
         this.initParallax();
-        this.initRevealAnimations();
+        // this.initRevealAnimations(); // Removed
         this.initCounters();
         this.initSkillBars();
     },
@@ -75,25 +75,7 @@ const App = {
         });
     },
 
-    // Reveal Animations
-    initRevealAnimations() {
-        const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-item');
-        
-        if (reveals.length === 0) return;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        reveals.forEach(el => observer.observe(el));
-    },
+    // Reveal Animations - REMOVED
 
     // Number Counters
     initCounters() {
@@ -155,4 +137,3 @@ const App = {
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });
-
