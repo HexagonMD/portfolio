@@ -332,32 +332,26 @@
             <div class="section-label">TECHNICAL APPROACH</div>
             <h2>技術的アプローチ</h2>
             
-            <div class="diagram">
-                <div class="diagram-title">SYSTEM ARCHITECTURE</div>
-                <pre style="font-family: var(--font-mono); color: var(--color-text-secondary); line-height: 1.4;">
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│  Agent A    │────▶│  Belief     │◀────│  Agent B    │
-│  (POMDP)    │     │  Sharing    │     │  (POMDP)    │
-└─────────────┘     └─────────────┘     └─────────────┘
-       │                    │                    │
-       ▼                    ▼                    ▼
-┌─────────────────────────────────────────────────┐
-│           Target System Environment             │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐        │
-│  │ Sensor  │  │ Defense │  │ Honeypot│        │
-│  └─────────┘  └─────────┘  └─────────┘        │
-└─────────────────────────────────────────────────┘
-                </pre>
-            </div>
-            
-            <div class="tech-stack">
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">TensorFlow</span>
-                <span class="tech-tag">PyTorch</span>
-                <span class="tech-tag">POMDP Solver</span>
-                <span class="tech-tag">Multi-Agent RL</span>
-                <span class="tech-tag">Game Theory</span>
-                <span class="tech-tag">Network Simulation</span>
+            <div class="concept-grid"> 
+                <div class="concept-card">
+                    <h3 class="concept-title">手法候補</h3>
+                    <div class="concept-description">
+                        <ul style="padding-left: 1rem; line-height: 1.8;">
+                            <li><strong>協調学習アルゴリズム:</strong><br>Dec-POMDP (小規模最適)<br>MADDPG (連続制御)<br>IQL (軽量ベースライン)</li>
+                            <li style="margin-top: 1rem;"><strong>共有知識モデル:</strong><br>信念状態の共有</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="concept-card">
+                    <h3 class="concept-title">評価指標</h3>
+                    <div class="concept-description">
+                        <ul style="padding-left: 1rem; line-height: 1.8;">
+                            <li><strong>評価項目:</strong><br>攻撃成功率<br>検知率<br>平均手数</li>
+                            <li style="margin-top: 1rem;"><strong>評価目標:</strong><br>攻撃成功率80%以上<br>検知率20%以下</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
