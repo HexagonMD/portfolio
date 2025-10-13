@@ -566,6 +566,11 @@ a {
     letter-spacing: 0.05em;
 }
 
+/* Override: Contact section labels should not be forced uppercase */
+#contact .contact-label {
+    text-transform: none;
+}
+
 .contact-value {
     font-family: var(--font-mono);
 }
