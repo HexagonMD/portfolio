@@ -69,16 +69,23 @@ const App = {
         const toggle = document.getElementById('themeToggle');
         if (!toggle) return;
 
+        const updateTooltip = () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            toggle.title = current === 'light' ? 'ダークモードにする' : 'ライトモードにする';
+        };
+
         const stored = localStorage.getItem('theme');
         if (stored) {
             document.documentElement.setAttribute('data-theme', stored);
         }
+        updateTooltip();
 
         toggle.addEventListener('click', () => {
             const current = document.documentElement.getAttribute('data-theme');
             const next = current === 'light' ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
+            updateTooltip();
         });
     },
 

@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/animations.css">
@@ -244,22 +244,29 @@
     </style>
 </head>
 <body>
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-    <div class="grid-bg"></div>
-
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <div class="nav-logo">
-                <span class="logo-text">BACKGROUND</span>
-            </div>
-            <a href="../index.html" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                Back to Portfolio
+            <a href="../index.html" class="nav-logo">
+                <img src="../assets/images/icon.jpg" alt="" class="logo-mark">
+                <span class="logo-text">Background</span>
             </a>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="テーマ切替" title="ダークモードにする">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <a href="../index.html" class="back-link" style="display:flex;align-items:center;gap:0.5rem;color:var(--color-text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.2s;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    ポートフォリオに戻る
+                </a>
+            </div>
         </nav>
     </header>
 
@@ -275,6 +282,51 @@
 
     <!-- Experience Sections -->
     <div class="container">
+        <!-- PLAID -->
+        <section class="experience-section">
+            <div class="experience-header">
+                <span class="experience-year">2025.12 — PRESENT</span>
+                <h2 class="experience-title">株式会社プレイド — Signalsチーム</h2>
+            </div>
+            
+            <div class="experience-content" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                <div class="content-block">
+                    <h3>フルスタックエンジニアとしての実務</h3>
+                    <p>
+                        2025年12月より株式会社プレイドにて、<span class="highlight-text">Signalsチームのフルスタックエンジニア</span>として従事。主にAIチャット機能の開発や、広告媒体コネクタ周りの機能開発・改善を担当しています。
+                    </p>
+                </div>
+                
+                <div class="content-block">
+                    <h3>AIチャット — バックエンドツール＆メモリ開発</h3>
+                    <p>
+                        AIチャットでは、<span class="highlight-text">トークン数の削減</span>と<span class="highlight-text">回答生成の精度向上</span>を主要テーマとして取り組んでいます。LLMが参照するバックエンドツールの設計・実装や、対話コンテキストを効率的に管理するワーキングメモリの開発を行い、応答品質とコスト効率の両立を目指しています。
+                    </p>
+                </div>
+
+                <div class="content-block">
+                    <h3>広告媒体コネクタの機能開発</h3>
+                    <p>
+                        各種広告媒体とプレイドのプロダクトを接続するコネクタの<span class="highlight-text">機能開発・改善</span>にも携わり、データ連携の信頼性向上やユーザー体験の改善に貢献しています。
+                    </p>
+                </div>
+
+                <div class="content-block">
+                    <h3>主な技術スタック</h3>
+                    <div class="skill-matrix">
+                        <div class="skill-item">Vue.js / React</div>
+                        <div class="skill-item">Java</div>
+                        <div class="skill-item">TypeScript</div>
+                        <div class="skill-item">LLM / Mastra</div>
+                        <div class="skill-item">ワーキングメモリ設計</div>
+                        <div class="skill-item">自作ツール開発</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
         <!-- High School Soccer -->
         <section class="experience-section">
             <div class="experience-header">
@@ -319,7 +371,7 @@
         <!-- Teaching Experience -->
         <section class="experience-section">
             <div class="experience-header">
-                <span class="experience-year">2021-PRESENT / 4th Year</span>
+                <span class="experience-year">2021 — 2025</span>
                 <h2 class="experience-title">集団塾講師</h2>
             </div>
             
@@ -345,7 +397,7 @@
         <!-- Part-time Job -->
         <section class="experience-section">
             <div class="experience-header">
-                <span class="experience-year">2022-PRESENT</span>
+                <span class="experience-year">2022 — 2025</span>
                 <h2 class="experience-title">居酒屋バイトリーダー</h2>
             </div>
             
@@ -384,7 +436,7 @@
         <!-- Skill Integration -->
         <section class="experience-section">
             <div class="experience-header">
-                <span class="experience-year">PRESENT</span>
+                <span class="experience-year">PRESENT & FUTURE</span>
                 <h2 class="experience-title">経験の統合と応用</h2>
             </div>
             
@@ -406,7 +458,7 @@
                 <div class="content-block">
                     <h3>将来への展望</h3>
                     <p>
-                        これまでの多様な経験で培った「支える」リーダーシップを、情報セキュリティの専門性と掛け合わせ、技術とマネジメントの両面から<span class="highlight-text">次世代のセキュリティプロフェッショナル</span>として社会に貢献していきたいと考えています。
+                        これまでの多様な経験で培った「支える」リーダーシップを、プレイドでの実務経験とセキュリティ研究で得た専門性と掛け合わせ、<span class="highlight-text">技術とマネジメントの両面から社会に貢献</span>していきたいと考えています。2026年4月からは筑波大学大学院 情報理工学位プログラムに進学し、さらに研究を深めていきます。
                     </p>
                 </div>
             </div>
