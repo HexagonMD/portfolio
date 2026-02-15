@@ -273,14 +273,14 @@
     <!-- Research Hero -->
     <section class="research-hero">
         <div class="research-hero-content">
-            <div class="research-label">CURRENT RESEARCH</div>
+            <div class="research-label">GRADUATION THESIS</div>
             <h1 class="research-title">
-                POMDP-based Multi-Agent<br>
-                Attack Modeling System
+                POMDPを用いた自律型<br>
+                攻撃エージェントの設計と評価
             </h1>
             <p class="research-subtitle">
-                部分観測マルコフ決定過程を基盤とした協調型マルチエージェント攻撃モデルの構築と、
-                次世代サイバーセキュリティ防御システムへの応用研究
+                不完全情報下で自律的に攻撃経路を選択するエージェントを設計・実装し、
+                その有効性を実験的に評価した卒業研究
             </p>
         </div>
     </section>
@@ -292,131 +292,58 @@
             <div class="section-label">OVERVIEW</div>
             <h2>研究概要</h2>
             <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
-                本研究は、単一エージェントのPOMDPモデルを協調型マルチエージェントシステム（MAS）へと拡張し、
-                複数のマルウェアが信念状態を共有しながら協調的に行動する高度な攻撃モデルの構築を目指しています。
-                これにより、現実の高度標的型攻撃（APT）をより正確にモデル化し、
-                効果的な防御戦略の開発につなげることを目的としています。
+                サイバー攻撃の高度化に伴い、AIによる自律的な攻撃が脅威として注目されています。
+                本研究では、攻撃プロセスを部分観測マルコフ決定過程（POMDP）で定式化し、
+                防御側のシステム状態を完全には把握できない状況下で、
+                信念状態に基づき最適な行動を選択する自律型攻撃エージェントを設計・実装しました。
             </p>
         </section>
 
-        <!-- Key Concepts -->
+        <!-- Key Points -->
         <section class="research-section">
-            <div class="section-label">KEY CONCEPTS</div>
-            <h2>主要な研究要素</h2>
+            <div class="section-label">KEY POINTS</div>
+            <h2>研究のポイント</h2>
             
             <div class="concept-grid">
                 <div class="concept-card">
                     <div class="concept-number">01</div>
-                    <h3 class="concept-title">部分観測性</h3>
+                    <h3 class="concept-title">信念ベースの意思決定</h3>
                     <p class="concept-description">
-                        攻撃者は防御システムの完全な状態を観測できない環境下で、
-                        限られた情報から最適な行動を選択する必要があります。
+                        限られた観測情報からベイズ更新で信念状態を推定し、
+                        将来報酬を考慮した長期的に最適な行動を選択します。
                     </p>
                 </div>
                 
                 <div class="concept-card">
                     <div class="concept-number">02</div>
-                    <h3 class="concept-title">信念状態共有</h3>
+                    <h3 class="concept-title">実環境での検証</h3>
                     <p class="concept-description">
-                        複数のエージェントが観測結果と信念状態を共有し、
-                        協調的な意思決定を実現するメカニズムを設計します。
+                        仮想ネットワーク上に構築した実環境で攻撃を実行し、
+                        3種のベースライン方策と比較して優位性を実証しました。
                     </p>
                 </div>
                 
                 <div class="concept-card">
                     <div class="concept-number">03</div>
-                    <h3 class="concept-title">通信最適化</h3>
+                    <h3 class="concept-title">マルチホスト拡張</h3>
                     <p class="concept-description">
-                        エージェント間の通信頻度と量を最適化し、
-                        検知リスクを最小化しながら協調効果を最大化します。
+                        単一ホストから複数ホスト・ネットワーク分離環境へ段階的に拡張し、
+                        横展開や段階的侵害戦略の設計を行いました。
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Technical Approach -->
+        <!-- Results -->
         <section class="research-section">
-            <div class="section-label">TECHNICAL APPROACH</div>
-            <h2>技術的アプローチ</h2>
+            <div class="section-label">RESULTS</div>
+            <h2>主な成果</h2>
             
-            <div class="concept-grid"> 
-                <div class="concept-card">
-                    <h3 class="concept-title">手法候補</h3>
-                    <div class="concept-description">
-                        <ul style="padding-left: 1rem; line-height: 1.8;">
-                            <li><strong>協調学習アルゴリズム:</strong><br>Dec-POMDP (小規模最適)<br>MADDPG (連続制御)<br>IQL (軽量ベースライン)</li>
-                            <li style="margin-top: 1rem;"><strong>共有知識モデル:</strong><br>信念状態の共有</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="concept-card">
-                    <h3 class="concept-title">評価指標</h3>
-                    <div class="concept-description">
-                        <ul style="padding-left: 1rem; line-height: 1.8;">
-                            <li><strong>評価項目:</strong><br>攻撃成功率<br>検知率<br>平均手数</li>
-                            <li style="margin-top: 1rem;"><strong>評価目標:</strong><br>攻撃成功率80%以上<br>検知率20%以下</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Research Timeline -->
-        <section class="research-section">
-            <div class="section-label">TIMELINE</div>
-            <h2>研究計画</h2>
-            
-            <div class="timeline">
-                <div class="timeline-item active">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h4>Phase 1: 基盤構築</h4>
-                        <p>POMDPモデルの実装と単体エージェントの意思決定アルゴリズム開発</p>
-                        <div class="timeline-meta">2025 Q1-Q2</div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h4>Phase 2: MAS拡張</h4>
-                        <p>マルチエージェントシステムへの拡張と信念状態共有メカニズムの設計</p>
-                        <div class="timeline-meta">2025 Q3-Q4</div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h4>Phase 3: 最適化</h4>
-                        <p>通信プロトコルの最適化と検知回避戦略の実装</p>
-                        <div class="timeline-meta">2026 Q1-Q2</div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h4>Phase 4: 評価・検証</h4>
-                        <p>実環境シミュレーションと防御システムへの応用</p>
-                        <div class="timeline-meta">2026 Q3-Q4</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Expected Impact -->
-        <section class="research-section">
-            <div class="section-label">EXPECTED IMPACT</div>
-            <h2>期待される成果</h2>
-            
-            <ul style="line-height: 1.8; color: var(--color-text-secondary); margin-top: 1rem;">
-                <li>高度標的型攻撃の振る舞いを予測する新しいモデルの確立</li>
-                <li>協調型マルウェアに対する効果的な防御戦略の開発</li>
-                <li>セキュリティシステムの脆弱性評価手法の改善</li>
-                <li>次世代EDR/XDRシステムへの実装可能な技術の提供</li>
-                <li>サイバーセキュリティ分野における機械学習応用の新たな知見</li>
+            <ul style="line-height: 2; color: var(--color-text-secondary); margin-top: 1rem; font-size: 1.05rem;">
+                <li>POMDP方策がベースライン3種の中で<strong style="color: var(--color-text);">唯一正の累積報酬</strong>を達成</li>
+                <li>報酬関数の設計が行動選択に決定的影響を与えることを確認</li>
+                <li>適切な報酬設計により<strong style="color: var(--color-text);">1ステップ先読みでも十分な性能</strong>を実現</li>
+                <li>Phase 1〜7の段階的拡張で、合計約3,000行の実装を完了</li>
             </ul>
         </section>
     </div>
