@@ -1,16 +1,15 @@
-<!-- Gemini was here -->
-<!-- test -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>森 大地 | Security Engineer</title>
+    <title>森 大地 | Full-Stack Engineer & Security Researcher</title>
+    <meta name="description" content="森 大地のポートフォリオ - フルスタックエンジニア・セキュリティ研究者">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/main.css">
@@ -18,149 +17,169 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- Cursor Effect -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Grid Background -->
-    <div class="grid-bg"></div>
-    
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="header">
         <nav class="nav">
-            <div class="nav-logo">
-                <span class="logo-text">MORI</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active" data-text="Home">Home</a></li>
-                <li><a href="#about" class="nav-link" data-text="About">About</a></li>
-                <li><a href="#skills" class="nav-link" data-text="Skills">Skills</a></li>
-                <li><a href="#research" class="nav-link" data-text="Research">Research</a></li>
-                <li><a href="pages/background.html" class="nav-link" data-text="Background">Background</a></li>
-                <li><a href="#contact" class="nav-link" data-text="Contact">Contact</a></li>
+            <a href="#" class="nav-logo">
+                <img src="assets/images/icon.jpg" alt="" class="logo-mark">
+                <span class="logo-text">Daichi Mori</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#activities" class="nav-link">Activities</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#research" class="nav-link">Research</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="テーマ切替">
+                    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="hero-label">SECURITY ENGINEER</div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    Full-Stack Engineer & Security Researcher
+                </div>
                 <h1 class="hero-title">
-                    <span class="line">森 大地</span>
-                    <span class="line subtitle">DAICHI MORI</span>
+                    <span class="hero-name-ja">森 大地</span>
+                    <span class="hero-name-en">DAICHI MORI</span>
                 </h1>
                 <p class="hero-description">
-                    東京電機大学 情報システム工学科 4年<br>
-                    筑波大学大学院 進学予定
+                    株式会社PLAIDでインターンとしてフルスタック開発に従事。<br>
+                    2026年4月より筑波大学大学院 情報理工学位プログラムに入学予定。
                 </p>
-                <div class="hero-cta">
-                    <a href="#research" class="btn btn-primary">
-                        <span>View Research</span>
-                        <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+                        <span>株式会社PLAID（インターン）</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 10 10-5 10 5-10 5Z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+                        <span>東京電機大学 → 筑波大学大学院</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="#activities" class="btn btn-primary">
+                        <span>最新の活動を見る</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M7 17L17 7M17 7H7M17 7v10"/>
                         </svg>
                     </a>
-                    <a href="pages/background.html" class="btn btn-primary">
-                        <span>My Background</span>
-                        <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                    <a href="#contact" class="btn btn-ghost">Contact</a>
+                </div>
+                <div class="hero-links">
+                    <a href="https://github.com/HexagonMD" target="_blank" rel="noopener" class="social-link" aria-label="GitHub" title="GitHubを開く">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     </a>
-                    <a href="#contact" class="btn btn-secondary">Contact</a>
+                    <a href="https://x.com/Hexagon_Penta" target="_blank" rel="noopener" class="social-link" aria-label="X" title="Xを開く">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://qiita.com/HexagonMD" target="_blank" rel="noopener" class="social-link" aria-label="Qiita" title="Qiitaを開く">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2a10 10 0 110 20 10 10 0 010-20zm-1 5v10h2V7h-2z"/></svg>
+                    </a>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="profile-container">
-                    <div class="profile-frame">
-                        <img src="assets/images/image.jpg" alt="森 大地" class="profile-img" id="profile-img-clickable" style="cursor: pointer;">
-                        <div class="profile-overlay"></div>
-                    </div>
-                    <div class="floating-elements">
-                        <div class="float-element" data-speed="2">POMDP</div>
-                        <div class="float-element" data-speed="3">Security</div>
-                        <div class="float-element" data-speed="1.5">AI Agent</div>
-                        <div class="float-element" data-speed="2.5">Machine Learning</div>
-                    </div>
+                <div class="hero-image-wrapper">
+                    <img src="assets/images/image.jpg" alt="森 大地" class="hero-image" id="profileImg">
+                </div>
+                <div class="hero-floating-tags">
+                    <span class="floating-tag tag-1">POMDP</span>
+                    <span class="floating-tag tag-2">Vue / React</span>
+                    <span class="floating-tag tag-3">Security</span>
+                    <span class="floating-tag tag-4">PLAID</span>
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
+    </section>
+
+    <!-- Activities Feed Section (Wantedly-like) -->
+    <section id="activities" class="section activities-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Activities</div>
+                <h2 class="section-title">最新の活動</h2>
+                <p class="section-subtitle">研究・イベント・学びの記録</p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="feed-filters" id="feedFilters">
+                <button class="filter-btn active" data-filter="all">すべて</button>
+                <button class="filter-btn" data-filter="research">研究</button>
+                <button class="filter-btn" data-filter="event">イベント</button>
+                <button class="filter-btn" data-filter="certification">資格・認定</button>
+                <button class="filter-btn" data-filter="article">記事</button>
+            </div>
+
+            <!-- Activity Feed Cards -->
+            <div class="feed-grid" id="feedGrid">
+                <!-- Cards are rendered dynamically by JS -->
+            </div>
+
+            <div class="feed-empty" id="feedEmpty" style="display:none;">
+                <p>該当する活動はありません</p>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section about">
+    <section id="about" class="section about-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">01</span>
-                    <span class="title-text">About Me</span>
-                </h2>
+                <div class="section-label">About</div>
+                <h2 class="section-title">自己紹介</h2>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="lead">
-                        情報セキュリティに情熱を注ぐ大学4年生として、
-                        次世代のサイバーセキュリティ技術の研究開発に取り組んでいます。
+            <div class="about-grid">
+                <div class="about-main">
+                    <p class="about-lead">
+                        株式会社PLAIDでインターンとしてフルスタック開発に従事。
+                        東京電機大学情報システム工学科を卒業予定、
+                        2026年4月より筑波大学大学院情報理工学位プログラムに入学予定です。
                     </p>
-                    <p>
-                        現在は部分観測マルコフ決定過程（POMDP）を用いた協調型マルチエージェント
-                        攻撃モデルの研究を進めており、筑波大学大学院への進学を通じて、
-                        より高度な脅威への対応能力を身につけることを目指しています。
+                    <p class="about-body">
+                        インターンではVue.js・Reactを用いたフロントエンドからJavaによるバックエンドまで
+                        幅広く開発を担当。卒業研究ではPOMDPを用いた自律型攻撃エージェントを設計し、
+                        大学院ではその研究を防御側の意思決定支援へ応用することを目指しています。
                     </p>
-                    <div style="margin-top: 2rem;">
-                        <a href="pages/background.html" class="btn btn-secondary">
-                            <span>My Background</span>
-                            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="achievements">
-                        <a href="https://qiita.com/HexagonMD/items/6112032b6a99f3c37092" target="_blank" rel="noopener noreferrer" class="achievement-card">
-                            <div class="achievement-icon">🏕️</div>
-                            <div class="achievement-content">
-                                <h3>Security Camp 2025</h3>
-                                <p>AI Agent開発ゼミ参加予定</p>
-                                <span style="font-size: 0.8em; color: var(--color-accent);">参加レポートへリンクが飛びます</span>
-                            </div>
-                        </a>
-                        <div class="achievement-card">
-                            <div class="achievement-icon">🏕️</div>
-                            <div class="achievement-content">
-                                <h3>Security Camp 2025 Mini</h3>
-                                <p>チューターとして参加</p>
-                            </div>
-                        </div>
-                        <div class="achievement-card">
-                            <div class="achievement-icon">💻</div>
-                            <div class="achievement-content">
-                                <h3>基本情報技術者</h3>
-                                <p>2024年9月取得</p>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="pages/background.html" class="btn btn-secondary">
+                        <span>経歴の詳細</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number" data-count="100">0</div>
-                        <div class="stat-label">Club Members Led</div>
+                <div class="about-cards">
+                    <div class="about-stat-card">
+                        <div class="stat-value" data-count="100">0</div>
+                        <div class="stat-desc">部員をまとめた<br>リーダーシップ</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-count="4">0</div>
-                        <div class="stat-label">Years as Teacher</div>
+                    <div class="about-stat-card">
+                        <div class="stat-value" data-count="4">0</div>
+                        <div class="stat-desc">年間の<br>塾講師経験</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-count="685">0</div>
-                        <div class="stat-label">TOEIC Score</div>
+                    <div class="about-stat-card accent">
+                        <div class="stat-value" data-count="685">0</div>
+                        <div class="stat-desc">TOEIC<br>スコア</div>
                     </div>
                 </div>
             </div>
@@ -168,161 +187,194 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="section skills">
+    <section id="skills" class="section skills-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">02</span>
-                    <span class="title-text">Technical Skills</span>
-                </h2>
+                <div class="section-label">Skills</div>
+                <h2 class="section-title">技術スタック</h2>
             </div>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <div class="skill-header">
-                        <div class="skill-icon">🔒</div>
-                        <h3>Security</h3>
+                    <div class="skill-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <ul class="skill-list">
-                        <li>サイバーセキュリティ</li>
-                        <li>マルウェア解析</li>
-                        <li>ペネトレーションテスト</li>
-                        <li>OSINT</li>
+                    <h3 class="skill-name">Security</h3>
+                    <ul class="skill-tags">
+                        <li>OSINT（Shodan / VirusTotal）</li>
+                        <li>FQDN Discovery</li>
+                        <li>ネットワーク偵察</li>
+                        <li>攻撃モデリング</li>
                     </ul>
-                    <div class="skill-level">
-                        <div class="level-bar" data-level="85"></div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" data-level="85"></div>
                     </div>
                 </div>
-                
                 <div class="skill-card">
-                    <div class="skill-header">
-                        <div class="skill-icon">🤖</div>
-                        <h3>AI/ML</h3>
+                    <div class="skill-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/><path d="M10 21v1M14 21v1M9 17h6"/></svg>
                     </div>
-                    <ul class="skill-list">
-                        <li>POMDP</li>
-                        <li>強化学習</li>
-                        <li>マルチエージェントシステム</li>
-                        <li>異常検知</li>
+                    <h3 class="skill-name">AI / Research</h3>
+                    <ul class="skill-tags">
+                        <li>AIチャット開発（Mastra）</li>
+                        <li>ワーキングメモリ設計</li>
+                        <li>自作ツール開発</li>
+                        <li>POMDP / 強化学習</li>
                     </ul>
-                    <div class="skill-level">
-                        <div class="level-bar" data-level="80"></div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" data-level="80"></div>
                     </div>
                 </div>
-                
                 <div class="skill-card">
-                    <div class="skill-header">
-                        <div class="skill-icon">💻</div>
-                        <h3>Programming</h3>
+                    <div class="skill-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                     </div>
-                    <ul class="skill-list">
-                        <li>Python / Java / C</li>
-                        <li>SQL</li>
+                    <h3 class="skill-name">Frontend</h3>
+                    <ul class="skill-tags">
+                        <li>JavaScript / TypeScript</li>
+                        <li>Vue.js / React</li>
                         <li>HTML / CSS</li>
-                        <li>Git / Docker</li>
                     </ul>
-                    <div class="skill-level">
-                        <div class="level-bar" data-level="90"></div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" data-level="90"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon-wrapper">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                    </div>
+                    <h3 class="skill-name">Backend / Infra</h3>
+                    <ul class="skill-tags">
+                        <li>Java</li>
+                        <li>Python</li>
+                        <li>Git / VirtualBox / VMware</li>
+                    </ul>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" data-level="85"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Research Section (Preview) -->
-    <section id="research" class="section research-preview">
+    <!-- Research Section -->
+    <section id="research" class="section research-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">03</span>
-                    <span class="title-text">Research</span>
-                </h2>
+                <div class="section-label">Research</div>
+                <h2 class="section-title">研究テーマ</h2>
             </div>
-            <div class="research-hero">
-                <h3 class="research-title">
-                    POMDP-based Multi-Agent<br>
-                    Attack Modeling Research
-                </h3>
-                <p class="research-description">
-                    部分観測マルコフ決定過程を用いた協調型マルチエージェント攻撃モデルの研究
-                </p>
-                <a href="pages/research.html" class="btn btn-primary">
-                    <span>詳細を見る</span>
-                    <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Background Section (Preview) -->
-    <section id="background-preview" class="section research-preview">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">05</span>
-                    <span class="title-text">これまでの研究以外の経験</span>
-                </h2>
-            </div>
-            <div class="research-hero">
-                <h3 class="research-title">
-                    リーダーシップ、教育、技術の融合から生まれた<br>
-                    独自のキャリアパス
-                </h3>
-                <p class="research-description">
-                    高校サッカー部キャプテン、集団塾講師、居酒屋バイトリーダーなど、
-                    多様な経験を通じて培ったスキルと学びを紹介します。
-                </p>
-                <a href="pages/background.html" class="btn btn-primary">
-                    <span>詳細を見る</span>
-                    <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                </a>
+            <div class="research-card">
+                <div class="research-card-content">
+                    <div class="research-tag">Graduation Thesis</div>
+                    <h3 class="research-card-title">
+                        POMDPを用いた自律型<br>攻撃エージェントの設計と評価
+                    </h3>
+                    <p class="research-card-desc">
+                        不完全情報下での攻撃行動をPOMDP（部分観測マルコフ決定過程）で定式化し、
+                        信念状態に基づいて行動選択する自律型攻撃エージェントを設計・実装。
+                        単一ホスト環境でベースライン3方策を上回る性能を達成し、
+                        マルチホスト環境への拡張やファイアウォール制約下での段階的侵害戦略も設計。
+                        自律型攻撃の脅威評価と防御側の意思決定支援に貢献する研究。
+                    </p>
+                    <div class="research-keywords">
+                        <span class="keyword">POMDP</span>
+                        <span class="keyword">Belief Update</span>
+                        <span class="keyword">Autonomous Agent</span>
+                        <span class="keyword">Cybersecurity</span>
+                        <span class="keyword">Lateral Movement</span>
+                    </div>
+                    <a href="pages/research.html" class="btn btn-primary">
+                        <span>研究の詳細</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="research-card-visual">
+                    <div class="research-graphic">
+                        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                            <rect x="100" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <rect x="20" y="100" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <rect x="100" y="100" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                            <line x1="80" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <line x1="50" y1="80" x2="50" y2="100" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <line x1="130" y1="80" x2="130" y2="100" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <line x1="80" y1="130" x2="100" y2="130" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.3"/>
+                            <circle cx="130" cy="50" r="4" fill="currentColor" opacity="0.2"/>
+                            <circle cx="50" cy="130" r="4" fill="currentColor" opacity="0.2"/>
+                            <circle cx="130" cy="130" r="4" fill="currentColor" opacity="0.3"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section contact">
+    <section id="contact" class="section contact-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">04</span>
-                    <span class="title-text">Contact</span>
-                </h2>
+                <div class="section-label">Contact</div>
+                <h2 class="section-title">お問い合わせ</h2>
+                <p class="section-subtitle">お気軽にご連絡ください</p>
             </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <a href="mailto:info@mail.daichi-mori.net" class="contact-item">
+            <div class="contact-grid">
+                <a href="mailto:info@mail.daichi-mori.net" class="contact-card" title="メールを開く">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </div>
+                    <div class="contact-info">
                         <span class="contact-label">Email</span>
                         <span class="contact-value">info@mail.daichi-mori.net</span>
-                    </a>
-                    <a href="https://github.com/HexagonMD" target="_blank" class="contact-item">
+                    </div>
+                </a>
+                <a href="https://github.com/HexagonMD" target="_blank" rel="noopener" class="contact-card" title="GitHubを開く">
+                    <div class="contact-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </div>
+                    <div class="contact-info">
                         <span class="contact-label">GitHub</span>
                         <span class="contact-value">@HexagonMD</span>
-                    </a>
-                    <a href="https://x.com/Hexagon_Penta" target="_blank" class="contact-item">
-                        <span class="contact-label">X</span>
+                    </div>
+                </a>
+                <a href="https://x.com/Hexagon_Penta" target="_blank" rel="noopener" class="contact-card" title="Xを開く">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <span class="contact-label">X (Twitter)</span>
                         <span class="contact-value">@Hexagon_Penta</span>
-                    </a>
-                    <a href="https://note.com/hexa_penta1025" target="_blank" class="contact-item">
+                    </div>
+                </a>
+                <a href="https://note.com/hexa_penta1025" target="_blank" rel="noopener" class="contact-card" title="Noteを開く">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                    </div>
+                    <div class="contact-info">
                         <span class="contact-label">Note</span>
                         <span class="contact-value">hexa_penta1025</span>
-                    </a>
-                    <a href="https://qiita.com/HexagonMD" target="_blank" class="contact-item">
+                    </div>
+                </a>
+                <a href="https://qiita.com/HexagonMD" target="_blank" rel="noopener" class="contact-card" title="Qiitaを開く">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                    </div>
+                    <div class="contact-info">
                         <span class="contact-label">Qiita</span>
                         <span class="contact-value">@HexagonMD</span>
-                    </a>
-                    <a href="https://www.wantedly.com/id/DaichiMori" target="_blank" class="contact-item">
+                    </div>
+                </a>
+                <a href="https://www.wantedly.com/id/DaichiMori" target="_blank" rel="noopener" class="contact-card" title="Wantedlyを開く">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="contact-info">
                         <span class="contact-label">Wantedly</span>
                         <span class="contact-value">DaichiMori</span>
-                    </a>
-                    <a href="https://www.dendai.ac.jp/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                        <span class="contact-label">University</span>
-                        <span class="contact-value">東京電機大学</span>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -330,19 +382,25 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Daichi Mori. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">Daichi Mori</span>
+                    <p class="footer-tagline">Full-Stack Engineer & Security Researcher</p>
+                </div>
+                <p class="footer-copy">&copy; 2026 Daichi Mori. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" aria-label="閉じる">&times;</button>
+        <img class="lightbox-content" id="lightboxImg" alt="">
+    </div>
 
     <!-- Scripts -->
     <script src="js/app.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/animations.js"></script>
-
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-    </div>
 </body>
 </html>

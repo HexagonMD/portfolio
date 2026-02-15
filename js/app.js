@@ -1,95 +1,204 @@
-// Global App Object
+// ============================================
+// Activity Feed Data
+// 新しい活動を追加するときは、このリストの先頭に追加するだけ。
+// 自動的に日付順（新しいものが上）で表示されます。
+// ============================================
+const ACTIVITIES = [
+    {
+        date: '2026-02-01',
+        category: 'research',
+        title: '筑波大学大学院 入学準備',
+        description: '筑波大学大学院への進学に向けた研究計画の策定と、POMDP攻撃モデル研究の拡張方針を整理中。',
+        link: null,
+    },
+    {
+        date: '2025-12-15',
+        category: 'research',
+        title: 'POMDPを用いた自律型攻撃エージェントの設計と評価（卒業論文）',
+        description: '不完全情報下での攻撃行動をPOMDPで定式化し、ベースライン3方策を上回る性能を達成。マルチホスト・ファイアウォール環境への拡張も実施。',
+        link: 'pages/research.html',
+    },
+    {
+        date: '2025-08-20',
+        category: 'event',
+        title: 'Security Camp 2025',
+        description: 'AI Agent開発ゼミに参加。最先端のセキュリティAIエージェント技術について集中的に学習・開発を実施。',
+        link: 'https://qiita.com/HexagonMD/items/6112032b6a99f3c37092',
+        linkLabel: '参加レポート',
+    },
+    {
+        date: '2025-10-15',
+        category: 'event',
+        title: 'Security Camp 2025 Mini チューター',
+        description: 'セキュリティ・キャンプミニにチューターとして参加。後進の育成に貢献。',
+        link: null,
+    },
+    {
+        date: '2024-09-01',
+        category: 'certification',
+        title: '基本情報技術者試験 合格',
+        description: '基本情報技術者試験に合格。情報技術の基礎知識を体系的に証明。',
+        link: null,
+    },
+    {
+        date: '2025-06-01',
+        category: 'article',
+        title: 'セキュリティ×AI研究の知見をQiitaで発信',
+        description: 'POMDP研究やセキュリティに関する技術記事をQiitaで公開。コミュニティへの知識共有を継続中。',
+        link: 'https://qiita.com/HexagonMD',
+        linkLabel: 'Qiitaプロフィール',
+    },
+];
+
+// ============================================
+// App Module
+// ============================================
 const App = {
     init() {
-        this.initCursor();
-        this.initParallax();
-        // this.initRevealAnimations(); // Removed
+        this.initTheme();
+        this.initScrollProgress();
+        this.initActivityFeed();
         this.initCounters();
         this.initSkillBars();
-        this.initLightbox(); // New call
-        this.initScrollIndicatorVisibility();
+        this.initLightbox();
+        this.initScrollReveal();
     },
 
-    // Custom Cursor
-    initCursor() {
-        const cursor = {
-            dot: document.querySelector('.cursor-dot'),
-            outline: document.querySelector('.cursor-outline')
+    // ------- Theme Toggle -------
+    initTheme() {
+        const toggle = document.getElementById('themeToggle');
+        if (!toggle) return;
+
+        const stored = localStorage.getItem('theme');
+        if (stored) {
+            document.documentElement.setAttribute('data-theme', stored);
+        }
+
+        toggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    },
+
+    // ------- Scroll Progress -------
+    initScrollProgress() {
+        const bar = document.getElementById('scrollProgress');
+        if (!bar) return;
+
+        const update = () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            bar.style.width = `${pct}%`;
         };
 
-        if (!cursor.dot || !cursor.outline) return;
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    },
 
-        let cursorX = 0;
-        let cursorY = 0;
-        let outlineX = 0;
-        let outlineY = 0;
+    // ------- Activity Feed (Wantedly-like) -------
+    initActivityFeed() {
+        const grid = document.getElementById('feedGrid');
+        const filters = document.getElementById('feedFilters');
+        const emptyState = document.getElementById('feedEmpty');
+        if (!grid || !filters) return;
 
-        document.addEventListener('mousemove', (e) => {
-            cursorX = e.clientX;
-            cursorY = e.clientY;
-            
-            cursor.dot.style.transform = `translate(${cursorX - 4}px, ${cursorY - 4}px)`;
-        });
+        // Sort activities by date (newest first)
+        const sorted = [...ACTIVITIES].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        const animateOutline = () => {
-            outlineX += (cursorX - outlineX) * 0.1;
-            outlineY += (cursorY - outlineY) * 0.1;
-            
-            cursor.outline.style.transform = `translate(${outlineX - 20}px, ${outlineY - 20}px)`;
-            
-            requestAnimationFrame(animateOutline);
+        const renderCards = (filter = 'all') => {
+            const filtered = filter === 'all'
+                ? sorted
+                : sorted.filter(a => a.category === filter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                if (emptyState) emptyState.style.display = 'block';
+                return;
+            }
+            if (emptyState) emptyState.style.display = 'none';
+
+            grid.innerHTML = filtered.map(activity => {
+                const dateStr = new Date(activity.date).toLocaleDateString('ja-JP', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+                const isExternal = activity.link && activity.link.startsWith('http');
+                const linkTarget = isExternal ? ' target="_blank" rel="noopener"' : '';
+                const linkLabel = activity.linkLabel || '詳細を見る';
+
+                return `
+                <${activity.link ? 'a' : 'div'} 
+                    class="feed-card" 
+                    ${activity.link ? `href="${activity.link}"${linkTarget}` : ''}
+                    data-category="${activity.category}"
+                >
+                    <div class="feed-card-body">
+                        <div class="feed-card-meta">
+                            <span class="feed-card-date">${dateStr}</span>
+                            <span class="feed-card-tag ${activity.category}">${getCategoryLabel(activity.category)}</span>
+                        </div>
+                        <h3 class="feed-card-title">${activity.title}</h3>
+                        <p class="feed-card-desc">${activity.description}</p>
+                    </div>
+                    ${activity.link ? `
+                    <div class="feed-card-footer">
+                        <span class="feed-card-link">
+                            ${linkLabel}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                            </svg>
+                        </span>
+                    </div>` : ''}
+                </${activity.link ? 'a' : 'div'}>`;
+            }).join('');
+
+            // Re-trigger scroll reveal for new cards
+            this.observeNewCards();
         };
-        animateOutline();
 
-        // Cursor hover effects
-        document.querySelectorAll('a, button, .skill-card, .achievement-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.outline.style.width = '60px';
-                cursor.outline.style.height = '60px';
-                cursor.outline.style.borderColor = 'var(--color-accent-alt)';
+        // Filter click handlers
+        filters.addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+
+            filters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderCards(btn.dataset.filter);
+        });
+
+        // Initial render
+        renderCards();
+    },
+
+    observeNewCards() {
+        const cards = document.querySelectorAll('.feed-card:not(.observed)');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
             });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.outline.style.width = '40px';
-                cursor.outline.style.height = '40px';
-                cursor.outline.style.borderColor = 'var(--color-accent)';
-            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.classList.add('observed');
+            observer.observe(card);
         });
     },
 
-    // Parallax Effect
-    initParallax() {
-        const elements = document.querySelectorAll('.float-element');
-        
-        if (elements.length === 0) return;
-
-        window.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth - 0.5;
-            const y = e.clientY / window.innerHeight - 0.5;
-            
-            elements.forEach(el => {
-                const speed = el.dataset.speed || 1;
-                const translateX = x * speed * 50;
-                const translateY = y * speed * 50;
-                
-                el.style.transform = `translate(${translateX}px, ${translateY}px)`;
-            });
-        });
-    },
-
-    // Reveal Animations - REMOVED
-
-    // Number Counters
+    // ------- Number Counters -------
     initCounters() {
-        const counters = document.querySelectorAll('.stat-number');
-        
+        const counters = document.querySelectorAll('.stat-value[data-count]');
         if (counters.length === 0) return;
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                    const target = parseInt(entry.target.dataset.count);
-                    const duration = 2000;
+                    const target = parseInt(entry.target.dataset.count, 10);
+                    const duration = 1800;
                     const step = target / (duration / 16);
                     let current = 0;
 
@@ -107,82 +216,93 @@ const App = {
                     entry.target.classList.add('counted');
                 }
             });
-        }, {
-            threshold: 0.5
-        });
+        }, { threshold: 0.5 });
 
-        counters.forEach(counter => observer.observe(counter));
+        counters.forEach(c => observer.observe(c));
     },
 
-    // Skill Bars Animation
+    // ------- Skill Bars -------
     initSkillBars() {
-        const bars = document.querySelectorAll('.level-bar');
-        
+        const bars = document.querySelectorAll('.skill-bar-fill');
         if (bars.length === 0) return;
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const level = entry.target.dataset.level;
-                    entry.target.style.width = `${level}%`;
+                    entry.target.style.width = `${entry.target.dataset.level}%`;
                 }
             });
-        }, {
-            threshold: 0.5
-        });
+        }, { threshold: 0.5 });
 
         bars.forEach(bar => observer.observe(bar));
     },
 
-    // Lightbox functionality
+    // ------- Lightbox -------
     initLightbox() {
-        const profileImg = document.getElementById('profile-img-clickable');
+        const profileImg = document.getElementById('profileImg');
         const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxImg = document.getElementById('lightboxImg');
         const closeBtn = document.querySelector('.lightbox-close');
 
-        if (!profileImg || !lightbox || !lightboxImg || !closeBtn) return;
+        if (!profileImg || !lightbox || !lightboxImg) return;
 
         profileImg.addEventListener('click', () => {
-            lightbox.style.display = 'block';
+            lightbox.classList.add('active');
             lightboxImg.src = profileImg.src;
+            document.body.style.overflow = 'hidden';
         });
 
-        closeBtn.addEventListener('click', () => {
-            lightbox.style.display = 'none';
-        });
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        };
 
+        if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.style.display = 'none';
-            }
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
         });
     },
 
-    // Scroll Indicator Visibility
-    initScrollIndicatorVisibility() {
-        const heroSection = document.getElementById('home');
-        const scrollIndicator = document.querySelector('.scroll-indicator');
+    // ------- Scroll Reveal -------
+    initScrollReveal() {
+        const selectors = [
+            '.section-header',
+            '.about-grid',
+            '.skills-grid > *',
+            '.research-card',
+            '.contact-grid > *',
+        ];
 
-        if (!heroSection || !scrollIndicator) return;
+        const elements = document.querySelectorAll(selectors.join(','));
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    scrollIndicator.style.display = 'flex';
-                } else {
-                    scrollIndicator.style.display = 'none';
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0 // Adjust as needed
-        });
+        }, { threshold: 0.1 });
 
-        observer.observe(heroSection);
-    }
+        elements.forEach(el => observer.observe(el));
+    },
 };
 
-// Initialize on DOM Load
+// Utility
+function getCategoryLabel(cat) {
+    const labels = {
+        research: '研究',
+        event: 'イベント',
+        certification: '資格・認定',
+        article: '記事',
+    };
+    return labels[cat] || cat;
+}
+
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 });

@@ -1,9 +1,12 @@
+// ============================================
 // Navigation Handler
+// ============================================
 class Navigation {
     constructor() {
+        this.header = document.getElementById('header');
         this.nav = document.querySelector('.nav');
-        this.navMenu = document.querySelector('.nav-menu');
-        this.navToggle = document.querySelector('.nav-toggle');
+        this.navMenu = document.getElementById('navMenu');
+        this.navToggle = document.getElementById('navToggle');
         this.navLinks = document.querySelectorAll('.nav-link');
         this.sections = document.querySelectorAll('section[id]');
         
@@ -21,8 +24,10 @@ class Navigation {
         if (!this.navToggle) return;
 
         this.navToggle.addEventListener('click', () => {
-            this.navMenu.classList.toggle('active');
+            const isOpen = this.navMenu.classList.toggle('active');
             this.navToggle.classList.toggle('active');
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
         // Close menu on link click
@@ -30,27 +35,36 @@ class Navigation {
             link.addEventListener('click', () => {
                 this.navMenu.classList.remove('active');
                 this.navToggle.classList.remove('active');
+                document.body.style.overflow = '';
             });
+        });
+
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.navMenu.classList.contains('active')) {
+                this.navMenu.classList.remove('active');
+                this.navToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
 
     handleScroll() {
-        let lastScroll = 0;
+        let ticking = false;
 
         window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-
-            // Add background on scroll
-            if (currentScroll > 50) {
-                this.nav.classList.add('scrolled');
-            } else {
-                this.nav.classList.remove('scrolled');
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    if (window.scrollY > 50) {
+                        this.header.classList.add('scrolled');
+                    } else {
+                        this.header.classList.remove('scrolled');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
-
-            
-
-            lastScroll = currentScroll;
-        });
+        }, { passive: true });
     }
 
     handleSmoothScroll() {
@@ -58,15 +72,11 @@ class Navigation {
             link.addEventListener('click', (e) => {
                 const targetId = link.getAttribute('href');
                 
-                // Only handle smooth scroll for internal anchor links (starting with #)
                 if (targetId.startsWith('#')) {
                     e.preventDefault();
                     const targetSection = document.querySelector(targetId);
                     
                     if (targetSection) {
-                        // Ensure the target section is visible before scrolling
-                        targetSection.classList.add('active');
-
                         const offset = 80;
                         const targetPosition = targetSection.offsetTop - offset;
                         
@@ -76,7 +86,6 @@ class Navigation {
                         });
                     }
                 }
-                // External links (like pages/*.html) will work normally without preventDefault
             });
         });
     }
@@ -90,21 +99,12 @@ class Navigation {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const id = entry.target.getAttribute('id');
-                let navLink;
-
-                if (id === 'background-preview') {
-                    navLink = document.querySelector('.nav-link[href="pages/background.html"]');
-                } else {
-                    navLink = document.querySelector(`.nav-link[href="#${id}"]`);
-                }
+                const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
                 
-                if (navLink) { // Ensure navLink exists
+                if (navLink) {
                     if (entry.isIntersecting) {
-                        // Add active to current link
+                        this.navLinks.forEach(l => l.classList.remove('active'));
                         navLink.classList.add('active');
-                    } else {
-                        // Remove active from current link when it leaves view
-                        navLink.classList.remove('active');
                     }
                 }
             });
@@ -114,7 +114,7 @@ class Navigation {
     }
 }
 
-// Initialize Navigation
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     new Navigation();
 });
