@@ -786,44 +786,70 @@ ul { list-style: none; }
     margin-bottom: var(--space-8);
 }
 
-.about-cards {
-    display: grid;
+.about-education {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-4);
 }
 
-.about-stat-card {
-    padding: var(--space-6);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    transition: all var(--duration-normal) var(--ease-out);
-}
-
-.about-stat-card:hover {
-    border-color: var(--color-border-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.about-stat-card.accent {
-    background: var(--color-accent-bg);
-    border-color: var(--color-accent-border);
-}
-
-.stat-value {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    line-height: 1;
+.education-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
     margin-bottom: var(--space-2);
 }
 
-.stat-desc {
+.education-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: relative;
+    padding-left: var(--space-6);
+    border-left: 2px solid var(--color-border);
+}
+
+.education-item {
+    position: relative;
+}
+
+.education-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * var(--space-6) - 5px);
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    border: 2px solid var(--color-bg);
+    box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.education-item:first-child::before {
+    width: 10px;
+    height: 10px;
+    left: calc(-1 * var(--space-6) - 6px);
+    top: 5px;
+}
+
+.education-period {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2px;
+}
+
+.education-school {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.education-dept {
     font-size: 0.85rem;
     color: var(--color-text-secondary);
-    line-height: 1.5;
+    margin-top: 2px;
 }
 
 /* ============================================

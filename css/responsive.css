@@ -55,8 +55,8 @@
         gap: var(--space-8);
     }
     
-    .about-cards {
-        grid-template-columns: repeat(3, 1fr);
+    .about-education {
+        margin-top: 0;
     }
     
     .research-card {
@@ -140,8 +140,8 @@
         font-size: 1.6rem;
     }
     
-    .about-cards {
-        grid-template-columns: 1fr;
+    .about-education {
+        margin-top: 0;
     }
     
     .skills-grid {

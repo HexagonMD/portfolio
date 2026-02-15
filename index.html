@@ -29,10 +29,10 @@
             </a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#activities" class="nav-link">Activities</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#research" class="nav-link">Research</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#activities" class="nav-link">Activities</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-actions">
@@ -91,11 +91,8 @@
                     <a href="https://github.com/HexagonMD" target="_blank" rel="noopener" class="social-link" aria-label="GitHub" title="GitHubを開く">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     </a>
-                    <a href="https://x.com/Hexagon_Penta" target="_blank" rel="noopener" class="social-link" aria-label="X" title="Xを開く">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </a>
-                    <a href="https://qiita.com/HexagonMD" target="_blank" rel="noopener" class="social-link" aria-label="Qiita" title="Qiitaを開く">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2a10 10 0 110 20 10 10 0 010-20zm-1 5v10h2V7h-2z"/></svg>
+                    <a href="https://www.wantedly.com/id/DaichiMori" target="_blank" rel="noopener" class="social-link" aria-label="Wantedly" title="Wantedlyを開く">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                     </a>
                 </div>
             </div>
@@ -109,36 +106,6 @@
                     <span class="floating-tag tag-3">Security</span>
                     <span class="floating-tag tag-4">PLAID</span>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Activities Feed Section (Wantedly-like) -->
-    <section id="activities" class="section activities-section">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-label">Activities</div>
-                <h2 class="section-title">最新の活動</h2>
-                <p class="section-subtitle">研究・イベント・学びの記録</p>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="feed-filters" id="feedFilters">
-                <button class="filter-btn active" data-filter="all">すべて</button>
-                <button class="filter-btn" data-filter="research">研究</button>
-                <button class="filter-btn" data-filter="intern">インターン</button>
-                <button class="filter-btn" data-filter="event">イベント</button>
-                <button class="filter-btn" data-filter="certification">資格・実績</button>
-                <button class="filter-btn" data-filter="article">記事</button>
-            </div>
-
-            <!-- Activity Feed Cards -->
-            <div class="feed-grid" id="feedGrid">
-                <!-- Cards are rendered dynamically by JS -->
-            </div>
-
-            <div class="feed-empty" id="feedEmpty" style="display:none;">
-                <p>該当する活動はありません</p>
             </div>
         </div>
     </section>
@@ -160,7 +127,7 @@
                     <p class="about-body">
                         インターンではVue.js・Reactを用いたフロントエンドからJavaによるバックエンドまで
                         幅広く開発を担当。卒業研究ではPOMDPを用いた自律型攻撃エージェントを設計し、
-                        大学院ではその研究を防御側の意思決定支援へ応用することを目指しています。
+                        大学院ではマルチエージェント化やローカルLLMを用いた攻撃の研究へ発展させることを目指しています。
                     </p>
                     <a href="pages/background.html" class="btn btn-secondary">
                         <span>経歴の詳細</span>
@@ -169,18 +136,86 @@
                         </svg>
                     </a>
                 </div>
-                <div class="about-cards">
-                    <div class="about-stat-card">
-                        <div class="stat-value" data-count="100">0</div>
-                        <div class="stat-desc">部員をまとめた<br>リーダーシップ</div>
+                <div class="about-education">
+                    <h3 class="education-heading">学歴</h3>
+                    <div class="education-timeline">
+                        <div class="education-item">
+                            <div class="education-period">2026.04 —</div>
+                            <div class="education-detail">
+                                <div class="education-school">筑波大学大学院</div>
+                                <div class="education-dept">理工情報生命学術院 システム情報工学研究群 情報理工学位プログラム</div>
+                            </div>
+                        </div>
+                        <div class="education-item">
+                            <div class="education-period">2022.04 — 2026.03</div>
+                            <div class="education-detail">
+                                <div class="education-school">東京電機大学</div>
+                                <div class="education-dept">システムデザイン工学部 情報システム工学科</div>
+                            </div>
+                        </div>
+                        <div class="education-item">
+                            <div class="education-period">2019.04 — 2022.03</div>
+                            <div class="education-detail">
+                                <div class="education-school">埼玉県立春日部東高等学校</div>
+                                <div class="education-dept">普通科</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="about-stat-card">
-                        <div class="stat-value" data-count="4">0</div>
-                        <div class="stat-desc">年間の<br>塾講師経験</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research" class="section research-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Research</div>
+                <h2 class="section-title">研究テーマ</h2>
+            </div>
+            <div class="research-card">
+                <div class="research-card-content">
+                    <div class="research-tag">Graduation Thesis</div>
+                    <h3 class="research-card-title">
+                        POMDPを用いた自律型<br>攻撃エージェントの設計と評価
+                    </h3>
+                    <p class="research-card-desc">
+                        不完全情報下での攻撃行動をPOMDP（部分観測マルコフ決定過程）で定式化し、
+                        信念状態に基づいて行動選択する自律型攻撃エージェントを設計・実装。
+                        単一ホスト環境でベースライン3方策を上回る性能を達成し、
+                        マルチホスト環境への拡張やファイアウォール制約下での段階的侵害戦略も設計。
+                        自律型攻撃の脅威評価と防御側の意思決定支援に貢献する研究。
+                    </p>
+                    <div class="research-keywords">
+                        <span class="keyword">POMDP</span>
+                        <span class="keyword">Belief Update</span>
+                        <span class="keyword">Autonomous Agent</span>
+                        <span class="keyword">Cybersecurity</span>
+                        <span class="keyword">Lateral Movement</span>
                     </div>
-                    <div class="about-stat-card accent">
-                        <div class="stat-value" data-count="685">0</div>
-                        <div class="stat-desc">TOEIC<br>スコア</div>
+                    <a href="pages/research.html" class="btn btn-primary">
+                        <span>研究の詳細</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="research-card-visual">
+                    <div class="research-graphic">
+                        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                            <rect x="100" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <rect x="20" y="100" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <rect x="100" y="100" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                            <line x1="80" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <line x1="50" y1="80" x2="50" y2="100" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <line x1="130" y1="80" x2="130" y2="100" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <line x1="80" y1="130" x2="100" y2="130" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+                            <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.3"/>
+                            <circle cx="130" cy="50" r="4" fill="currentColor" opacity="0.2"/>
+                            <circle cx="50" cy="130" r="4" fill="currentColor" opacity="0.2"/>
+                            <circle cx="130" cy="130" r="4" fill="currentColor" opacity="0.3"/>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -257,58 +292,32 @@
         </div>
     </section>
 
-    <!-- Research Section -->
-    <section id="research" class="section research-section">
+    <!-- Activities Feed Section (Wantedly-like) -->
+    <section id="activities" class="section activities-section">
         <div class="container">
             <div class="section-header">
-                <div class="section-label">Research</div>
-                <h2 class="section-title">研究テーマ</h2>
+                <div class="section-label">Activities</div>
+                <h2 class="section-title">最新の活動</h2>
+                <p class="section-subtitle">研究・イベント・学びの記録</p>
             </div>
-            <div class="research-card">
-                <div class="research-card-content">
-                    <div class="research-tag">Graduation Thesis</div>
-                    <h3 class="research-card-title">
-                        POMDPを用いた自律型<br>攻撃エージェントの設計と評価
-                    </h3>
-                    <p class="research-card-desc">
-                        不完全情報下での攻撃行動をPOMDP（部分観測マルコフ決定過程）で定式化し、
-                        信念状態に基づいて行動選択する自律型攻撃エージェントを設計・実装。
-                        単一ホスト環境でベースライン3方策を上回る性能を達成し、
-                        マルチホスト環境への拡張やファイアウォール制約下での段階的侵害戦略も設計。
-                        自律型攻撃の脅威評価と防御側の意思決定支援に貢献する研究。
-                    </p>
-                    <div class="research-keywords">
-                        <span class="keyword">POMDP</span>
-                        <span class="keyword">Belief Update</span>
-                        <span class="keyword">Autonomous Agent</span>
-                        <span class="keyword">Cybersecurity</span>
-                        <span class="keyword">Lateral Movement</span>
-                    </div>
-                    <a href="pages/research.html" class="btn btn-primary">
-                        <span>研究の詳細</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="research-card-visual">
-                    <div class="research-graphic">
-                        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="20" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.2"/>
-                            <rect x="100" y="20" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-                            <rect x="20" y="100" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-                            <rect x="100" y="100" width="60" height="60" rx="8" stroke="currentColor" stroke-width="1" opacity="0.2"/>
-                            <line x1="80" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-                            <line x1="50" y1="80" x2="50" y2="100" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-                            <line x1="130" y1="80" x2="130" y2="100" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-                            <line x1="80" y1="130" x2="100" y2="130" stroke="currentColor" stroke-width="1" opacity="0.15"/>
-                            <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.3"/>
-                            <circle cx="130" cy="50" r="4" fill="currentColor" opacity="0.2"/>
-                            <circle cx="50" cy="130" r="4" fill="currentColor" opacity="0.2"/>
-                            <circle cx="130" cy="130" r="4" fill="currentColor" opacity="0.3"/>
-                        </svg>
-                    </div>
-                </div>
+
+            <!-- Filter Tabs -->
+            <div class="feed-filters" id="feedFilters">
+                <button class="filter-btn active" data-filter="all">すべて</button>
+                <button class="filter-btn" data-filter="research">研究</button>
+                <button class="filter-btn" data-filter="intern">インターン</button>
+                <button class="filter-btn" data-filter="event">イベント</button>
+                <button class="filter-btn" data-filter="certification">資格・実績</button>
+                <button class="filter-btn" data-filter="article">記事</button>
+            </div>
+
+            <!-- Activity Feed Cards -->
+            <div class="feed-grid" id="feedGrid">
+                <!-- Cards are rendered dynamically by JS -->
+            </div>
+
+            <div class="feed-empty" id="feedEmpty" style="display:none;">
+                <p>該当する活動はありません</p>
             </div>
         </div>
     </section>
