@@ -75,7 +75,8 @@ const ACTIVITIES = [
         category: 'certification',
         title: '高校サッカー部 歴代最高記録達成',
         description: 'ゲームキャプテンとしてチームを率い、埼玉県高校サッカー選手権予選でシード無しの予選上がりから唯一のベスト16を達成。高校歴代最高成績を更新。',
-        link: null,
+        link: 'https://toshun.net/2021/10/22/%e9%ab%98%e6%a0%a1%e9%81%b8%e6%89%8b%e6%a8%a9%e3%83%99%e3%82%b9%e3%83%8816%e6%b1%ba%e5%ae%9a%ef%bc%81/',
+        linkLabel: '関連記事',
     },
     {
         date: '2025-12-07',
