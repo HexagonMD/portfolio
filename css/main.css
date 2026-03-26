@@ -176,6 +176,33 @@ ul { list-style: none; }
     padding: var(--space-4) var(--space-6);
     max-width: 1120px;
     margin: 0 auto;
+    position: relative;
+}
+
+/* ============================================
+   MOBILE NAV OVERLAY
+   ============================================ */
+.nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 9, 12, 0.65);
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
+    z-index: 950;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .nav-overlay {
+    background: rgba(15, 18, 28, 0.45);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .nav-logo {

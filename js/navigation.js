@@ -23,30 +23,43 @@ class Navigation {
     handleMobileMenu() {
         if (!this.navToggle) return;
 
+        this.navOverlay = document.getElementById('navOverlay');
+
+        const openMenu = () => {
+            this.navMenu.classList.add('active');
+            this.navToggle.classList.add('active');
+            if (this.navOverlay) this.navOverlay.classList.add('active');
+        };
+
+        const closeMenu = () => {
+            this.navMenu.classList.remove('active');
+            this.navToggle.classList.remove('active');
+            if (this.navOverlay) this.navOverlay.classList.remove('active');
+        };
+
         this.navToggle.addEventListener('click', () => {
-            const isOpen = this.navMenu.classList.toggle('active');
-            this.navToggle.classList.toggle('active');
-            // Prevent body scroll when menu is open
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+            this.navMenu.classList.contains('active') ? closeMenu() : openMenu();
         });
 
         // Close menu on link click
         this.navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                this.navMenu.classList.remove('active');
-                this.navToggle.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', () => closeMenu());
         });
 
         // Close on escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.navMenu.classList.contains('active')) {
-                this.navMenu.classList.remove('active');
-                this.navToggle.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+            if (e.key === 'Escape') closeMenu();
         });
+
+        // オーバーレイクリックで閉じる
+        if (this.navOverlay) {
+            this.navOverlay.addEventListener('click', () => closeMenu());
+        }
+
+        // デスクトップ幅にリサイズされたら閉じる
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeMenu();
+        }, { passive: true });
     }
 
     handleScroll() {

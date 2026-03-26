@@ -75,30 +75,112 @@
 /* Mobile */
 @media (max-width: 768px) {
     .nav-menu {
-        display: none;
-        position: fixed;
-        top: 0;
+        position: absolute;
+        top: 100%;
         left: 0;
         right: 0;
-        bottom: 0;
         background: var(--color-bg);
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: var(--space-2);
-        z-index: 999;
-        padding: var(--space-8);
+        align-items: stretch;
+        gap: 0;
+        padding: var(--space-1) 0;
+        border-top: 2px solid var(--color-accent);
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+        counter-reset: nav-item;
+        z-index: 1000;
+        /* display:none → visibility+opacity+transform でアニメーション可能にする */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition:
+            opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0s linear 0.25s;
     }
-    
+
+    [data-theme="light"] .nav-menu {
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+    }
+
     .nav-menu.active {
-        display: flex;
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        transition:
+            opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0s linear 0s;
     }
-    
+
+    .nav-menu li {
+        border-bottom: 1px solid var(--color-border);
+        counter-increment: nav-item;
+    }
+
+    .nav-menu li:last-child {
+        border-bottom: none;
+    }
+
     .nav-menu .nav-link {
-        font-size: 1.2rem;
-        padding: var(--space-4) var(--space-8);
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        padding: var(--space-5) var(--space-6);
+        padding-right: calc(var(--space-6) + 24px);
+        border-radius: 0;
+        width: 100%;
+        position: relative;
+        transition: background 0.15s ease, color 0.15s ease;
     }
-    
+
+    /* 連番カウンター */
+    .nav-menu .nav-link::before {
+        content: counter(nav-item, decimal-leading-zero);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+        opacity: 0.75;
+        flex-shrink: 0;
+        min-width: 1.6em;
+    }
+
+    /* 右矢印 */
+    .nav-menu .nav-link::after {
+        content: '';
+        position: absolute;
+        right: var(--space-6);
+        top: 50%;
+        width: 6px;
+        height: 6px;
+        border-right: 1.5px solid currentColor;
+        border-top: 1.5px solid currentColor;
+        opacity: 0.25;
+        transform: translateY(-50%) rotate(45deg);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-menu .nav-link:hover::after,
+    .nav-menu .nav-link.active::after {
+        opacity: 0.7;
+        transform: translateY(-50%) translateX(3px) rotate(45deg);
+    }
+
+    .nav-menu .nav-link:hover {
+        background: var(--color-surface-hover);
+        color: var(--color-text);
+    }
+
+    .nav-menu .nav-link.active {
+        color: var(--color-accent);
+        background: var(--color-accent-bg);
+    }
+
     .nav-toggle {
         display: flex;
         z-index: 1001;
