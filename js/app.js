@@ -50,6 +50,14 @@ const ACTIVITIES = [
         link: null,
     },
     {
+        date: '2025-10-05',
+        category: 'event',
+        title: 'LINEヤフー主催 Hack U 参加 — 旅行計画共有アプリ「とりっぴー」開発',
+        description: 'チームリーダーとして4名でハッカソンに参加し、「みんなで建てる計画から、思い出に残る旅を」をコンセプトに約2週間で企画〜発表を完遂。WebRTCによるリアルタイム共同編集やGoogle Maps API連携で複数人同時編集のUI/UXを実現し、タイムテーブルから「旅のしおり」を自動生成する機能も設計。',
+        link: 'https://github.com/HexagonMD/Niwa-Hall/blob/master/%E3%81%A8%E3%82%8A%E3%81%A3%E3%81%B4%E3%83%BC%E3%83%97%E3%83%AC%E3%82%BC%E3%83%B3%E8%B3%87%E6%96%99.pdf',
+        linkLabel: '説明プレゼン資料',
+    },
+    {
         date: '2025-10-18',
         category: 'event',
         title: 'Security Camp 2025 Mini チューター',
