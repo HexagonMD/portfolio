@@ -128,6 +128,91 @@ const ACTIVITIES = [
 ];
 
 // ============================================
+// Utilities
+// ============================================
+
+const CATEGORY_LABELS = {
+    research: '研究',
+    event: 'イベント',
+    intern: 'インターン',
+    certification: '資格・実績',
+    article: '記事',
+};
+
+function getCategoryLabel(cat) {
+    return CATEGORY_LABELS[cat] ?? cat;
+}
+
+function formatDate(dateStr) {
+    const isYearMonth = dateStr.split('-').length === 2;
+    const date = new Date(isYearMonth ? dateStr + '-01' : dateStr);
+    return date.toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: 'long',
+        ...(!isYearMonth && { day: 'numeric' }),
+    });
+}
+
+function buildDateLabel(activity) {
+    if (!activity.date) return '';
+    const start = formatDate(activity.date);
+    if (!('endDate' in activity)) return start;
+    const end = activity.endDate ? formatDate(activity.endDate) : '現在';
+    return `${start} — ${end}`;
+}
+
+// ============================================
+// Activity Feed Card Builder (DOM-based)
+// ============================================
+
+function buildCard(activity) {
+    const tag = activity.link ? 'a' : 'div';
+    const card = document.createElement(tag);
+    card.className = 'feed-card';
+    card.dataset.category = activity.category;
+
+    if (activity.link) {
+        card.href = activity.link;
+        if (activity.link.startsWith('http')) {
+            card.target = '_blank';
+            card.rel = 'noopener';
+        }
+    }
+
+    const dateLabel = buildDateLabel(activity);
+
+    const body = document.createElement('div');
+    body.className = 'feed-card-body';
+    body.innerHTML = `
+        <div class="feed-card-meta">
+            ${dateLabel ? `<span class="feed-card-date">${dateLabel}</span>` : ''}
+            <span class="feed-card-tag ${activity.category}">${getCategoryLabel(activity.category)}</span>
+        </div>
+        <h3 class="feed-card-title"></h3>
+        <p class="feed-card-desc"></p>
+    `;
+    body.querySelector('.feed-card-title').textContent = activity.title;
+    body.querySelector('.feed-card-desc').textContent = activity.description;
+    card.appendChild(body);
+
+    if (activity.link) {
+        const footer = document.createElement('div');
+        footer.className = 'feed-card-footer';
+        footer.innerHTML = `
+            <span class="feed-card-link">
+                ${activity.linkLabel ?? '詳細を見る'}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                </svg>
+            </span>
+        `;
+        card.appendChild(footer);
+    }
+
+    return card;
+}
+
+// ============================================
 // App Module
 // ============================================
 const App = {
@@ -135,7 +220,6 @@ const App = {
         this.initTheme();
         this.initScrollProgress();
         this.initActivityFeed();
-        this.initCounters();
         this.initSkillBars();
         this.initLightbox();
         this.initScrollReveal();
@@ -147,14 +231,12 @@ const App = {
         if (!toggle) return;
 
         const updateTooltip = () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            toggle.title = current === 'light' ? 'ダークモードにする' : 'ライトモードにする';
+            const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+            toggle.title = isDark ? 'ライトモードにする' : 'ダークモードにする';
         };
 
         const stored = localStorage.getItem('theme');
-        if (stored) {
-            document.documentElement.setAttribute('data-theme', stored);
-        }
+        if (stored) document.documentElement.setAttribute('data-theme', stored);
         updateTooltip();
 
         toggle.addEventListener('click', () => {
@@ -172,9 +254,8 @@ const App = {
         if (!bar) return;
 
         const update = () => {
-            const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
             bar.style.width = `${pct}%`;
         };
 
@@ -182,7 +263,7 @@ const App = {
         update();
     },
 
-    // ------- Activity Feed (Wantedly-like) -------
+    // ------- Activity Feed -------
     initActivityFeed() {
         const INITIAL_COUNT = 6;
         const grid = document.getElementById('feedGrid');
@@ -197,68 +278,18 @@ const App = {
         let expanded = false;
         let currentFiltered = [];
 
-        // Sort activities by date (newest first)
         const sorted = [...ACTIVITIES].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        const buildCard = (activity) => {
-            const fmtDate = (d) => {
-                const parts = d.split('-');
-                if (parts.length === 2) {
-                    return new Date(d + '-01').toLocaleDateString('ja-JP', {
-                        year: 'numeric', month: 'long'
-                    });
-                }
-                return new Date(d).toLocaleDateString('ja-JP', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
-            };
-            let dateStr = '';
-            if (activity.date) {
-                const start = fmtDate(activity.date);
-                if ('endDate' in activity) {
-                    const end = activity.endDate ? fmtDate(activity.endDate) : '現在';
-                    dateStr = `${start} — ${end}`;
-                } else {
-                    dateStr = start;
-                }
-            }
-            const isExternal = activity.link && activity.link.startsWith('http');
-            const linkTarget = isExternal ? ' target="_blank" rel="noopener"' : '';
-            const linkLabel = activity.linkLabel || '詳細を見る';
-            return `
-            <${activity.link ? 'a' : 'div'}
-                class="feed-card"
-                ${activity.link ? `href="${activity.link}"${linkTarget}` : ''}
-                data-category="${activity.category}"
-            >
-                <div class="feed-card-body">
-                    <div class="feed-card-meta">
-                        ${dateStr ? `<span class="feed-card-date">${dateStr}</span>` : ''}
-                        <span class="feed-card-tag ${activity.category}">${getCategoryLabel(activity.category)}</span>
-                    </div>
-                    <h3 class="feed-card-title">${activity.title}</h3>
-                    <p class="feed-card-desc">${activity.description}</p>
-                </div>
-                ${activity.link ? `
-                <div class="feed-card-footer">
-                    <span class="feed-card-link">
-                        ${linkLabel}
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                        </svg>
-                    </span>
-                </div>` : ''}
-            </${activity.link ? 'a' : 'div'}>`;
-        };
-
-        const updateMoreBtn = () => {
+        const syncMoreBtn = () => {
             if (!moreWrap) return;
-            if (currentFiltered.length <= INITIAL_COUNT) {
-                moreWrap.style.display = 'none';
-                return;
+            const hasMore = currentFiltered.length > INITIAL_COUNT;
+            moreWrap.style.display = hasMore ? 'flex' : 'none';
+            if (!hasMore) return;
+            if (moreLabel) {
+                moreLabel.textContent = expanded
+                    ? '折りたたむ'
+                    : `もっと見る（あと${currentFiltered.length - INITIAL_COUNT}件）`;
             }
-            moreWrap.style.display = 'flex';
-            if (moreLabel) moreLabel.textContent = expanded ? '折りたたむ' : `もっと見る（あと${currentFiltered.length - INITIAL_COUNT}件）`;
             if (moreIcon) moreIcon.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
         };
 
@@ -268,67 +299,52 @@ const App = {
                 : sorted.filter(a => a.category === filter);
             expanded = false;
 
-            if (currentFiltered.length === 0) {
-                grid.innerHTML = '';
-                if (emptyState) emptyState.style.display = 'block';
-                updateMoreBtn();
-                return;
-            }
-            if (emptyState) emptyState.style.display = 'none';
-
-            const visible = currentFiltered.slice(0, INITIAL_COUNT);
-            grid.innerHTML = visible.map(buildCard).join('');
-            updateMoreBtn();
-            // Re-trigger scroll reveal for new cards
+            const isEmpty = currentFiltered.length === 0;
+            if (emptyState) emptyState.style.display = isEmpty ? 'block' : 'none';
+            grid.replaceChildren(
+                ...currentFiltered.slice(0, INITIAL_COUNT).map(buildCard)
+            );
+            syncMoreBtn();
             this.observeNewCards();
         };
 
-        // More / collapse button
         if (moreBtn) {
             moreBtn.addEventListener('click', () => {
                 expanded = !expanded;
                 if (expanded) {
-                    // append hidden cards
-                    const hidden = currentFiltered.slice(INITIAL_COUNT);
-                    hidden.forEach(activity => {
-                        const tmp = document.createElement('div');
-                        tmp.innerHTML = buildCard(activity);
-                        const card = tmp.firstElementChild;
+                    currentFiltered.slice(INITIAL_COUNT).forEach(activity => {
+                        const card = buildCard(activity);
                         card.classList.add('feed-card--hidden');
                         grid.appendChild(card);
-                        // trigger animation next frame
-                        requestAnimationFrame(() => card.classList.add('feed-card--show'));
+                        // double rAF で確実にトランジションを発火させる
+                        requestAnimationFrame(() =>
+                            requestAnimationFrame(() => card.classList.add('feed-card--show'))
+                        );
                     });
                 } else {
-                    // remove extra cards
-                    const cards = grid.querySelectorAll('.feed-card');
-                    cards.forEach((card, i) => {
-                        if (i >= INITIAL_COUNT) card.remove();
-                    });
-                    // scroll back to section top
-                    document.getElementById('activities')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    [...grid.querySelectorAll('.feed-card')]
+                        .slice(INITIAL_COUNT)
+                        .forEach(card => card.remove());
+                    document.getElementById('activities')
+                        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-                updateMoreBtn();
+                syncMoreBtn();
                 this.observeNewCards();
             });
         }
 
-        // Filter click handlers
         filters.addEventListener('click', (e) => {
             const btn = e.target.closest('.filter-btn');
             if (!btn) return;
-
             filters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderCards(btn.dataset.filter);
         });
 
-        // Initial render
         renderCards();
     },
 
     observeNewCards() {
-        const cards = document.querySelectorAll('.feed-card:not(.observed)');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -338,48 +354,16 @@ const App = {
             });
         }, { threshold: 0.1 });
 
-        cards.forEach(card => {
+        document.querySelectorAll('.feed-card:not(.observed)').forEach(card => {
             card.classList.add('observed');
             observer.observe(card);
         });
     },
 
-    // ------- Number Counters -------
-    initCounters() {
-        const counters = document.querySelectorAll('.stat-value[data-count]');
-        if (counters.length === 0) return;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                    const target = parseInt(entry.target.dataset.count, 10);
-                    const duration = 1800;
-                    const step = target / (duration / 16);
-                    let current = 0;
-
-                    const updateCounter = () => {
-                        current += step;
-                        if (current < target) {
-                            entry.target.textContent = Math.floor(current);
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            entry.target.textContent = target;
-                        }
-                    };
-
-                    updateCounter();
-                    entry.target.classList.add('counted');
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(c => observer.observe(c));
-    },
-
     // ------- Skill Bars -------
     initSkillBars() {
         const bars = document.querySelectorAll('.skill-bar-fill');
-        if (bars.length === 0) return;
+        if (!bars.length) return;
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -398,27 +382,22 @@ const App = {
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const closeBtn = document.querySelector('.lightbox-close');
-
         if (!profileImg || !lightbox || !lightboxImg) return;
 
-        profileImg.addEventListener('click', () => {
-            lightbox.classList.add('active');
+        const open = () => {
             lightboxImg.src = profileImg.src;
+            lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
-        });
-
-        const closeLightbox = () => {
+        };
+        const close = () => {
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
         };
 
-        if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
-        });
+        profileImg.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
     },
 
     // ------- Scroll Reveal -------
@@ -430,9 +409,6 @@ const App = {
             '.research-card',
             '.contact-grid > *',
         ];
-
-        const elements = document.querySelectorAll(selectors.join(','));
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -442,23 +418,9 @@ const App = {
             });
         }, { threshold: 0.1 });
 
-        elements.forEach(el => observer.observe(el));
+        document.querySelectorAll(selectors.join(',')).forEach(el => observer.observe(el));
     },
 };
 
-// Utility
-function getCategoryLabel(cat) {
-    const labels = {
-        research: '研究',
-        event: 'イベント',
-        intern: 'インターン',
-        certification: '資格・実績',
-        article: '記事',
-    };
-    return labels[cat] || cat;
-}
-
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    App.init();
-});
+document.addEventListener('DOMContentLoaded', () => App.init());
