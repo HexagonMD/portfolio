@@ -184,81 +184,134 @@ const App = {
 
     // ------- Activity Feed (Wantedly-like) -------
     initActivityFeed() {
+        const INITIAL_COUNT = 6;
         const grid = document.getElementById('feedGrid');
         const filters = document.getElementById('feedFilters');
         const emptyState = document.getElementById('feedEmpty');
+        const moreWrap = document.getElementById('feedMoreWrap');
+        const moreBtn = document.getElementById('feedMoreBtn');
+        const moreLabel = document.getElementById('feedMoreLabel');
+        const moreIcon = document.getElementById('feedMoreIcon');
         if (!grid || !filters) return;
+
+        let expanded = false;
+        let currentFiltered = [];
 
         // Sort activities by date (newest first)
         const sorted = [...ACTIVITIES].sort((a, b) => new Date(b.date) - new Date(a.date));
 
+        const buildCard = (activity) => {
+            const fmtDate = (d) => {
+                const parts = d.split('-');
+                if (parts.length === 2) {
+                    return new Date(d + '-01').toLocaleDateString('ja-JP', {
+                        year: 'numeric', month: 'long'
+                    });
+                }
+                return new Date(d).toLocaleDateString('ja-JP', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+            };
+            let dateStr = '';
+            if (activity.date) {
+                const start = fmtDate(activity.date);
+                if ('endDate' in activity) {
+                    const end = activity.endDate ? fmtDate(activity.endDate) : '現在';
+                    dateStr = `${start} — ${end}`;
+                } else {
+                    dateStr = start;
+                }
+            }
+            const isExternal = activity.link && activity.link.startsWith('http');
+            const linkTarget = isExternal ? ' target="_blank" rel="noopener"' : '';
+            const linkLabel = activity.linkLabel || '詳細を見る';
+            return `
+            <${activity.link ? 'a' : 'div'}
+                class="feed-card"
+                ${activity.link ? `href="${activity.link}"${linkTarget}` : ''}
+                data-category="${activity.category}"
+            >
+                <div class="feed-card-body">
+                    <div class="feed-card-meta">
+                        ${dateStr ? `<span class="feed-card-date">${dateStr}</span>` : ''}
+                        <span class="feed-card-tag ${activity.category}">${getCategoryLabel(activity.category)}</span>
+                    </div>
+                    <h3 class="feed-card-title">${activity.title}</h3>
+                    <p class="feed-card-desc">${activity.description}</p>
+                </div>
+                ${activity.link ? `
+                <div class="feed-card-footer">
+                    <span class="feed-card-link">
+                        ${linkLabel}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                        </svg>
+                    </span>
+                </div>` : ''}
+            </${activity.link ? 'a' : 'div'}>`;
+        };
+
+        const updateMoreBtn = () => {
+            if (!moreWrap) return;
+            if (currentFiltered.length <= INITIAL_COUNT) {
+                moreWrap.style.display = 'none';
+                return;
+            }
+            moreWrap.style.display = 'flex';
+            if (moreLabel) moreLabel.textContent = expanded ? '折りたたむ' : `もっと見る（あと${currentFiltered.length - INITIAL_COUNT}件）`;
+            if (moreIcon) moreIcon.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
+        };
+
         const renderCards = (filter = 'all') => {
-            const filtered = filter === 'all'
+            currentFiltered = filter === 'all'
                 ? sorted
                 : sorted.filter(a => a.category === filter);
+            expanded = false;
 
-            if (filtered.length === 0) {
+            if (currentFiltered.length === 0) {
                 grid.innerHTML = '';
                 if (emptyState) emptyState.style.display = 'block';
+                updateMoreBtn();
                 return;
             }
             if (emptyState) emptyState.style.display = 'none';
 
-            grid.innerHTML = filtered.map(activity => {
-                const fmtDate = (d) => {
-                    const parts = d.split('-');
-                    if (parts.length === 2) {
-                        return new Date(d + '-01').toLocaleDateString('ja-JP', {
-                            year: 'numeric', month: 'long'
-                        });
-                    }
-                    return new Date(d).toLocaleDateString('ja-JP', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                    });
-                };
-                let dateStr = '';
-                if (activity.date) {
-                    const start = fmtDate(activity.date);
-                    if ('endDate' in activity) {
-                        const end = activity.endDate ? fmtDate(activity.endDate) : '現在';
-                        dateStr = `${start} — ${end}`;
-                    } else {
-                        dateStr = start;
-                    }
-                }
-                const isExternal = activity.link && activity.link.startsWith('http');
-                const linkTarget = isExternal ? ' target="_blank" rel="noopener"' : '';
-                const linkLabel = activity.linkLabel || '詳細を見る';
-
-                return `
-                <${activity.link ? 'a' : 'div'} 
-                    class="feed-card" 
-                    ${activity.link ? `href="${activity.link}"${linkTarget}` : ''}
-                    data-category="${activity.category}"
-                >
-                    <div class="feed-card-body">
-                        <div class="feed-card-meta">
-                            ${dateStr ? `<span class="feed-card-date">${dateStr}</span>` : ''}
-                            <span class="feed-card-tag ${activity.category}">${getCategoryLabel(activity.category)}</span>
-                        </div>
-                        <h3 class="feed-card-title">${activity.title}</h3>
-                        <p class="feed-card-desc">${activity.description}</p>
-                    </div>
-                    ${activity.link ? `
-                    <div class="feed-card-footer">
-                        <span class="feed-card-link">
-                            ${linkLabel}
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                            </svg>
-                        </span>
-                    </div>` : ''}
-                </${activity.link ? 'a' : 'div'}>`;
-            }).join('');
-
+            const visible = currentFiltered.slice(0, INITIAL_COUNT);
+            grid.innerHTML = visible.map(buildCard).join('');
+            updateMoreBtn();
             // Re-trigger scroll reveal for new cards
             this.observeNewCards();
         };
+
+        // More / collapse button
+        if (moreBtn) {
+            moreBtn.addEventListener('click', () => {
+                expanded = !expanded;
+                if (expanded) {
+                    // append hidden cards
+                    const hidden = currentFiltered.slice(INITIAL_COUNT);
+                    hidden.forEach(activity => {
+                        const tmp = document.createElement('div');
+                        tmp.innerHTML = buildCard(activity);
+                        const card = tmp.firstElementChild;
+                        card.classList.add('feed-card--hidden');
+                        grid.appendChild(card);
+                        // trigger animation next frame
+                        requestAnimationFrame(() => card.classList.add('feed-card--show'));
+                    });
+                } else {
+                    // remove extra cards
+                    const cards = grid.querySelectorAll('.feed-card');
+                    cards.forEach((card, i) => {
+                        if (i >= INITIAL_COUNT) card.remove();
+                    });
+                    // scroll back to section top
+                    document.getElementById('activities')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                updateMoreBtn();
+                this.observeNewCards();
+            });
+        }
 
         // Filter click handlers
         filters.addEventListener('click', (e) => {
