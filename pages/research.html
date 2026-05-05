@@ -296,62 +296,86 @@
     <!-- Research Hero -->
     <section class="research-hero">
         <div class="research-hero-content">
-            <div class="research-label">GRADUATION THESIS</div>
+            <div class="research-label">GRADUATION THESIS · ICSS 2026</div>
             <h1 class="research-title">
                 POMDPを用いた自律型<br>
                 攻撃エージェントの設計と評価
             </h1>
             <p class="research-subtitle">
                 不完全情報下で自律的に攻撃経路を選択するエージェントを設計・実装し、
-                その有効性を実験的に評価した卒業研究
+                Phase 1〜7の段階的実験でその有効性と防御側への示唆を定量評価した卒業研究。<br>
+                東京電機大学 学部長賞受賞 ／ 情報セキュリティ研究会（ICSS）2026年5月発表。
             </p>
         </div>
     </section>
 
     <!-- Research Content -->
     <div class="container">
-        <!-- Overview Section -->
+
+        <!-- Overview -->
         <section class="research-section">
             <div class="section-label">OVERVIEW</div>
             <h2>研究概要</h2>
             <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1rem;">
-                サイバー攻撃の高度化に伴い、AIによる自律的な攻撃が脅威として注目されています。
-                本研究では、攻撃プロセスを部分観測マルコフ決定過程（POMDP）で定式化し、
-                防御側のシステム状態を完全には把握できない状況下で、
-                信念状態に基づき最適な行動を選択する自律型攻撃エージェントを設計・実装しました。
+                サイバー攻撃の高度化に伴い、外部C&Cサーバなしで自律動作する攻撃エージェントが
+                現実的な脅威として認識されつつある。本研究では、攻撃者が環境の真の状態を観測できない
+                という特性に着目し、攻撃プロセスを<strong>部分観測マルコフ決定過程（POMDP）</strong>で定式化。
+                信念状態のベイズ更新により適切なタイミングで攻撃行動を選択する
+                自律型エージェントを設計・実装し、シミュレーション・実ネットワークの両環境で評価した。
             </p>
+            <div class="tech-stack">
+                <span class="tech-tag">Python 3.13</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">pandas</span>
+                <span class="tech-tag">Paramiko</span>
+                <span class="tech-tag">VirtualBox / VMware</span>
+                <span class="tech-tag">GNS3</span>
+                <span class="tech-tag">Ubuntu 22.04</span>
+                <span class="tech-tag">約2,900行</span>
+            </div>
         </section>
 
-        <!-- Key Points -->
+        <!-- POMDP Model -->
         <section class="research-section">
-            <div class="section-label">KEY POINTS</div>
-            <h2>研究のポイント</h2>
-            
+            <div class="section-label">POMDP MODEL</div>
+            <h2>モデル設計（7つ組）</h2>
             <div class="concept-grid">
                 <div class="concept-card">
-                    <div class="concept-number">01</div>
-                    <h3 class="concept-title">信念ベースの意思決定</h3>
+                    <div class="concept-number">S</div>
+                    <h3 class="concept-title">状態空間（4状態）</h3>
                     <p class="concept-description">
-                        限られた観測情報からベイズ更新で信念状態を推定し、
-                        将来報酬を考慮した長期的に最適な行動を選択します。
+                        <strong>initial</strong> — 偵察前の初期状態<br>
+                        <strong>probing</strong> — 脆弱性・サービス発見<br>
+                        <strong>compromised</strong> — 侵入成功（吸収）<br>
+                        <strong>detected</strong> — 検知・攻撃終了（吸収）
                     </p>
                 </div>
-                
                 <div class="concept-card">
-                    <div class="concept-number">02</div>
-                    <h3 class="concept-title">実環境での検証</h3>
+                    <div class="concept-number">A</div>
+                    <h3 class="concept-title">行動空間（5行動）</h3>
                     <p class="concept-description">
-                        仮想ネットワーク上に構築した実環境で攻撃を実行し、
-                        3種のベースライン方策と比較して優位性を実証しました。
+                        wait / ssh_scan / vuln_scan / ssh_login / exploit<br><br>
+                        Phase 6では水平展開用に<strong>11行動</strong>へ拡張
+                        （mysql_exploit / credential_harvest / pivot_attack 等）
                     </p>
                 </div>
-                
                 <div class="concept-card">
-                    <div class="concept-number">03</div>
-                    <h3 class="concept-title">マルチホスト拡張</h3>
+                    <div class="concept-number">b</div>
+                    <h3 class="concept-title">信念状態 ＆ ベイズ更新</h3>
                     <p class="concept-description">
-                        単一ホストから複数ホスト・ネットワーク分離環境へ段階的に拡張し、
-                        横展開や段階的侵害戦略の設計を行いました。
+                        観測 o を得るたびに信念を更新：<br>
+                        <em>b'(s') = η × Z(o|s',a) × Σ T(s'|s,a)×b(s)</em><br><br>
+                        初期信念：initial 0.85 / detected 0.10 / probing 0.05
+                    </p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-number">R</div>
+                    <h3 class="concept-title">報酬関数</h3>
+                    <p class="concept-description">
+                        侵入成功（exploit@compromised）：<strong>+200</strong><br>
+                        攻撃検知（detected 各行動）：−100〜−160<br><br>
+                        報酬比率の設計がエージェントの行動選択を決定的に左右する。
+                        修正前の wait 過剰問題を解決し成功率 0%→100% を達成。
                     </p>
                 </div>
             </div>
@@ -360,15 +384,143 @@
         <!-- Results -->
         <section class="research-section">
             <div class="section-label">RESULTS</div>
-            <h2>主な成果</h2>
-            
-            <ul style="line-height: 2; color: var(--color-text-secondary); margin-top: 1rem; font-size: 1.05rem;">
-                <li>POMDP方策がベースライン3種の中で<strong style="color: var(--color-text);">唯一正の累積報酬</strong>を達成</li>
-                <li>報酬関数の設計が行動選択に決定的影響を与えることを確認</li>
-                <li>適切な報酬設計により<strong style="color: var(--color-text);">1ステップ先読みでも十分な性能</strong>を実現</li>
-                <li>Phase 1〜7の段階的拡張で、合計約3,000行の実装を完了</li>
+            <h2>実験結果</h2>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem;">Phase 1–5：単一ホスト ベースライン比較</h3>
+            <div class="concept-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">+340.73</div>
+                    <h3 class="concept-title">POMDP 累積報酬</h3>
+                    <p class="concept-description">他3方策すべてが負の報酬の中、唯一正の値を達成</p>
+                </div>
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">4 Steps</div>
+                    <h3 class="concept-title">侵入完了ステップ数</h3>
+                    <p class="concept-description">ssh_scan → exploit×3 の最短経路を自律選択</p>
+                </div>
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">×6678</div>
+                    <h3 class="concept-title">N=4 計算量増加</h3>
+                    <p class="concept-description">先読み深度 H=1 が最良。深い先読みは検知リスクを累積させる</p>
+                </div>
+            </div>
+
+            <h3 style="margin: 2.5rem 0 1rem; font-size: 1.1rem;">Phase 6：マルチホスト（4台・SSH/MySQL/Samba）</h3>
+            <div class="concept-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">+14%</div>
+                    <h3 class="concept-title">対 Greedy 改善率</h3>
+                    <p class="concept-description">低検知環境（感度0.1）でPOMDPが優位。高検知環境では逆転</p>
+                </div>
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">+24.1%</div>
+                    <h3 class="concept-title">認証情報活用の効果</h3>
+                    <p class="concept-description">credential_harvest により累積報酬が24.1%、侵害ホスト数が28.6%改善</p>
+                </div>
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem;">6.2%</div>
+                    <h3 class="concept-title">3ベクトル時の成功率</h3>
+                    <p class="concept-description">SSH単独62.5% → 3ベクトル6.2%。行動空間拡大で探索困難性が増大</p>
+                </div>
+            </div>
+
+            <h3 style="margin: 2.5rem 0 1rem; font-size: 1.1rem;">Phase 7：ファイアウォール・セグメント分離（5台・3セグメント）</h3>
+            <div class="concept-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">25.0%</div>
+                    <h3 class="concept-title">Confidential 到達率</h3>
+                    <p class="concept-description">FWによる3段階分離でConfidentialセグメントへの到達を25%に制限。多層防御の有効性を確認</p>
+                </div>
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">0回</div>
+                    <h3 class="concept-title">FWブロック回数</h3>
+                    <p class="concept-description">POMDPエージェントが信念状態からFWルールを自律学習し、許可経路のみを選択</p>
+                </div>
+                <div class="concept-card" style="text-align:center;">
+                    <div class="concept-number" style="font-size:2rem; color: var(--color-accent);">+68.8</div>
+                    <h3 class="concept-title">累積報酬</h3>
+                    <p class="concept-description">段階的侵害戦略により正の累積報酬を達成</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Insights -->
+        <section class="research-section">
+            <div class="section-label">KEY INSIGHTS</div>
+            <h2>考察・防御側への示唆</h2>
+            <ul style="line-height: 2.2; color: var(--color-text-secondary); margin-top: 1rem; font-size: 1.05rem;">
+                <li><strong style="color: var(--color-text);">信念状態による優位性</strong> — Greedy は probing 状態で ssh_login を繰り返し exploit 機会を逃すが、POMDPは信念が閾値を超えた時点で exploit を選択できる</li>
+                <li><strong style="color: var(--color-text);">攻撃ベクトルの逆説</strong> — 攻撃経路を増やすほど行動空間が拡大し成功率が低下。防御側はダミー経路の設置で攻撃エージェントを混乱させられる可能性</li>
+                <li><strong style="color: var(--color-text);">認証情報管理の重要性</strong> — credential_harvest の効果から、bash_history・設定ファイルの適切な管理・定期ローテーションが横展開阻止に直結</li>
+                <li><strong style="color: var(--color-text);">多層防御の定量的効果</strong> — ゼロトラスト・マイクロセグメンテーションがConfidential到達率を25%に制限。IDS感度0.2以上でPOMDP優位性を抑制可能</li>
             </ul>
         </section>
+
+        <!-- Future Work -->
+        <section class="research-section">
+            <div class="section-label">FUTURE WORK</div>
+            <h2>今後の発展</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-number">01</div>
+                    <h3 class="concept-title">深層強化学習との統合</h3>
+                    <p class="concept-description">
+                        16ホスト以上の大規模環境ではO(|A|^H)の計算量が実用限界を超える。
+                        DQN・PPOによるパラメータ自動学習と組み合わせることで大規模環境へ対応する。
+                    </p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-number">02</div>
+                    <h3 class="concept-title">ローカルLLMとの統合</h3>
+                    <p class="concept-description">
+                        POMDPが行動選択・確率的意思決定を担い、ローカルLLMがログ解析・
+                        コマンド出力の意味理解・未知環境での行動候補生成を担うハイブリッド型エージェントへ。
+                        現在の大学院での研究テーマ。
+                    </p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-number">03</div>
+                    <h3 class="concept-title">マルチエージェント化</h3>
+                    <p class="concept-description">
+                        複数の自律型攻撃エージェントが協調・競合するDec-POMDPへ拡張。
+                        偵察・侵入・横展開の役割分担や同時多方面攻撃のモデル化が可能になる。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publication -->
+        <section class="research-section">
+            <div class="section-label">PUBLICATION</div>
+            <h2>発表・受賞</h2>
+            <div class="timeline">
+                <div class="timeline-item active">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>情報セキュリティ研究会（ICSS）登壇発表</h4>
+                        <p>「POMDPを用いた自律型攻撃エージェントの設計と評価 ― ネットワーク環境における実装と実験的評価 ―」<br>機械振興会館・2026年5月26日</p>
+                        <span class="timeline-meta">筑波大学 理工情報生命学術院 / 指導：八槇 博史 先生（東京電機大学）</span>
+                    </div>
+                </div>
+                <div class="timeline-item active">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>東京電機大学 システムデザイン工学部 学部長賞 受賞</h4>
+                        <p>学業成績・卒業研究・課外活動の総合評価による表彰。2026年3月卒業式にて授与。</p>
+                        <span class="timeline-meta">2026.03</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>卒業論文 提出・審査</h4>
+                        <p>東京電機大学 情報システム工学科<br>「POMDPを用いた自律型攻撃エージェントのネットワーク環境における実装と評価」</p>
+                        <span class="timeline-meta">2026.02</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <script src="../js/app.js"></script>
