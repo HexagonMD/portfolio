@@ -596,6 +596,30 @@ ul { list-style: none; }
 }
 
 /* ============================================
+   SLIDE EMBED
+   ============================================ */
+.slide-section {
+    background: var(--color-bg-secondary, var(--color-bg));
+}
+
+.slide-embed-wrapper {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Speaker Deck embed responsive */
+.slide-embed-wrapper > div,
+.slide-embed-wrapper > iframe,
+.speakerdeck-embed {
+    width: 100% !important;
+    border: none;
+}
+
+/* ============================================
    ACTIVITY FEED (Wantedly-style)
    ============================================ */
 .activities-section {
