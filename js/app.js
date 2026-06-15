@@ -5,6 +5,14 @@
 // ============================================
 const ACTIVITIES = [
     {
+        date: '2026-08-10',
+        endDate: '2026-08-15',
+        category: 'event',
+        title: 'Security Camp 2026 全国大会 AIセキュリティクラス チューター採択',
+        description: '専門コースD「AIセキュリティクラス」にチューターとして採択。コネクトでの経験に引き続き、AIセキュリティ分野でプロダクトエンジニア兼学生として、講師の方々と受講生をつなぐ役割に従事する予定。LLMやAIエージェントを実社会で安全に活用するための技術・ガバナンス・倫理の観点から、受講生の実践と議論を支援する。',
+        link: 'https://www.ipa.go.jp/jinzai/security-camp/zenkoku.html#passed',
+    },
+    {
         date: '2026-07-01',
         endDate: '2026-07-31',
         category: 'intern',
