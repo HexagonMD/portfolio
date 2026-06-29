@@ -25,8 +25,9 @@ const ACTIVITIES = [
         endDate: '2026-05-31',
         category: 'intern',
         title: '株式会社プレイド Signalsチーム インターン',
-        description: '半年間のインターンとして、自社AIチャット機能のエージェント設計・実装に従事。トークン数削減・回答精度向上のためのバックエンドツールやワーキングメモリの開発、広告媒体コネクタの機能開発・改善を担当し、最終的なGA化につながる開発に携わった。',
-        link: 'https://plaid.co.jp/news/20260424/',
+        description: '半年間のインターンとして、KARTE SignalsのAI分析チャット開発に従事。Mastraを用いたワーキングメモリ機能をゼロから設計・実装し、プロンプト最適化、ツール使用状況・Reasoning表示、ハルシネーション抑制にフロントエンドからバックエンドまで一気通貫で取り組んだ。',
+        link: 'https://tech.plaid.co.jp/intern-mastra-karte-signals-ai-chat-memory',
+        linkLabel: '体験記を見る',
     },
     {
         date: '2025-10-27',
