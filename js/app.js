@@ -9,7 +9,7 @@ const ACTIVITIES = [
         category: 'event',
         title: 'Sansan株式会社 インターン',
         description: 'ContractOneの新機能開発に向けて、ADRの作成から実装までのプロセスに取り組んでいます。',
-        dateLabel: '2026年9月～現在まで',
+        dateLabel: '2026年9月～',
         link: null,
     },
     {
