@@ -5,6 +5,22 @@
 // ============================================
 const ACTIVITIES = [
     {
+        date: '2026-09',
+        category: 'event',
+        title: 'Sansan株式会社 インターン',
+        description: 'ContractOneの新機能開発に向けて、ADRの作成から実装までのプロセスに取り組んでいます。',
+        dateLabel: '2026年9月～現在まで',
+        link: null,
+    },
+    {
+        date: '2026-09-11',
+        category: 'article',
+        title: 'MCPのOAuth 2.1認可フローを、認証と認可を分けながら整理してみる',
+        description: 'MCPにおけるOAuth 2.1の認証・認可フローと、PKCEやOIDCの役割を整理しました。',
+        link: 'https://qiita.com/HexagonMD/items/7951aa32b61e6a14930c',
+        linkLabel: 'Qiita記事',
+    },
+    {
         date: '2026-08-10',
         endDate: '2026-08-15',
         category: 'event',
@@ -171,6 +187,7 @@ function formatDate(dateStr) {
 }
 
 function buildDateLabel(activity) {
+    if (activity.dateLabel) return activity.dateLabel;
     if (!activity.date) return '';
     const start = formatDate(activity.date);
     if (!('endDate' in activity)) return start;
@@ -236,6 +253,7 @@ const App = {
     init() {
         this.initTheme();
         this.initScrollProgress();
+        this.initMediaCarousel();
         this.initActivityFeed();
         this.initSkillBars();
         this.initLightbox();
@@ -278,6 +296,88 @@ const App = {
 
         window.addEventListener('scroll', update, { passive: true });
         update();
+    },
+
+    // ------- Media Carousel -------
+    initMediaCarousel() {
+        const viewport = document.querySelector('[data-carousel-viewport]');
+        const track = document.querySelector('[data-carousel-track]');
+        const prevBtn = document.querySelector('[data-carousel-prev]');
+        const nextBtn = document.querySelector('[data-carousel-next]');
+        const dotsWrap = document.querySelector('[data-carousel-dots]');
+        if (!viewport || !track || !prevBtn || !nextBtn || !dotsWrap) return;
+
+        const slides = [...track.querySelectorAll('.media-slide')];
+        if (!slides.length) return;
+
+        let index = 0;
+        let autoTimer = null;
+        const AUTO_INTERVAL = 5200;
+
+        const nearestIndex = () => {
+            const left = viewport.scrollLeft;
+            return slides.reduce((nearest, slide, i) => {
+                const current = Math.abs(slides[nearest].offsetLeft - left);
+                const next = Math.abs(slide.offsetLeft - left);
+                return next < current ? i : nearest;
+            }, 0);
+        };
+
+        const update = () => {
+            dotsWrap.querySelectorAll('.media-carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+            });
+        };
+
+        const goTo = (nextIndex) => {
+            index = (nextIndex + slides.length) % slides.length;
+            viewport.scrollTo({
+                left: slides[index].offsetLeft,
+                behavior: 'smooth',
+            });
+            update();
+        };
+
+        const restartAuto = () => {
+            window.clearInterval(autoTimer);
+            autoTimer = window.setInterval(() => goTo(index + 1), AUTO_INTERVAL);
+        };
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'media-carousel-dot';
+            dot.setAttribute('aria-label', `${i + 1}枚目へ`);
+            dot.addEventListener('click', () => {
+                goTo(i);
+                restartAuto();
+            });
+            dotsWrap.appendChild(dot);
+        });
+
+        let scrollTimer = null;
+        viewport.addEventListener('scroll', () => {
+            window.clearTimeout(scrollTimer);
+            scrollTimer = window.setTimeout(() => {
+                index = nearestIndex();
+                update();
+            }, 80);
+        }, { passive: true });
+        prevBtn.addEventListener('click', () => {
+            goTo(index - 1);
+            restartAuto();
+        });
+        nextBtn.addEventListener('click', () => {
+            goTo(index + 1);
+            restartAuto();
+        });
+        window.addEventListener('resize', update);
+        viewport.addEventListener('pointerenter', () => window.clearInterval(autoTimer));
+        viewport.addEventListener('pointerleave', restartAuto);
+
+        update();
+        restartAuto();
     },
 
     // ------- Activity Feed -------
