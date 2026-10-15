@@ -31,7 +31,7 @@ const ACTIVITIES = [
         endDate: '2026-10',
         category: 'intern',
         title: 'Sansan株式会社 インターン',
-        description: 'ContractOneの新機能開発を担当。ADRによる設計方針の整理からDB設計、実装まで一貫して取り組む。',
+        description: 'ContractOneの新機能開発を担当。PBIの整理、ADRによる設計方針の整理、DB設計から実装まで一貫して取り組んだ。',
         link: null,
     },
     {
