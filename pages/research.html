@@ -38,8 +38,22 @@
     
     <style>
         /* Research Page Specific Styles */
+        .header {
+            position: sticky;
+        }
+
+        .nav {
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .nav-actions {
+            margin-left: auto;
+        }
+
         .research-hero {
             min-height: 60vh;
+            padding: 4rem 0;
             display: flex;
             align-items: center;
             position: relative;
@@ -63,9 +77,10 @@
         .research-hero-content {
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 var(--space-6);
         }
         
         .research-label {
@@ -79,7 +94,7 @@
         .research-title {
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 900;
-            line-height: 1.1;
+            line-height: 1.35;
             margin-bottom: 1.5rem;
         }
         
@@ -108,12 +123,14 @@
         
         .concept-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
         
         .concept-card {
+            min-width: 0;
+            overflow-wrap: anywhere;
             background: var(--color-surface);
             border: 1px solid var(--color-border);
             padding: 2rem;
@@ -256,7 +273,7 @@
             gap: 0.5rem;
             color: var(--color-text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 2rem;
+            margin-bottom: 0;
             transition: all 0.3s;
         }
         
@@ -287,7 +304,7 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    ポートフォリオに戻る
+                    トップへ戻る
                 </a>
             </div>
         </nav>

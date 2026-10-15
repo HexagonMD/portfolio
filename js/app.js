@@ -6,9 +6,9 @@
 const ACTIVITIES = [
     {
         date: '2026-09',
-        category: 'event',
+        category: 'intern',
         title: 'Sansan株式会社 インターン',
-        description: 'ContractOneの新機能開発に向けて、ADRの作成から実装までのプロセスに取り組んでいます。',
+        description: 'ContractOneの新機能開発を担当。ADRによる設計方針の整理からDB設計、実装まで一貫して取り組んでいます。',
         dateLabel: '2026年9月～',
         link: null,
     },
@@ -33,7 +33,7 @@ const ACTIVITIES = [
         endDate: '2026-07-31',
         category: 'intern',
         title: '株式会社CARTA HOLDINGS セキュリティエンジニア',
-        description: 'LLMと静的解析を組み合わせ、複数リポジトリを横断してセキュリティリスクを発見・評価・説明する診断ハーネスのPoCを研究開発。候補箇所の文脈整理、再現可能な検証手順の生成、事業・サービス・アーキテクチャ上の観点を含むトリアージレポート化に取り組む予定。',
+        description: 'LLMと静的解析を組み合わせ、複数リポジトリを横断してセキュリティリスクを発見・評価・説明する診断ハーネスのPoCを研究開発。候補箇所の文脈整理、再現可能な検証手順の生成、事業・サービス・アーキテクチャ上の観点を含むトリアージレポート化に取り組みました。',
         link: 'https://cartaholdings.co.jp/',
     },
     {
