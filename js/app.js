@@ -5,11 +5,33 @@
 // ============================================
 const ACTIVITIES = [
     {
+        date: '2026-08',
+        endDate: '2026-09',
+        category: 'intern',
+        title: '株式会社日立製作所｜研究開発インターンシップ',
+        description: '研究開発グループにて、OT現場におけるセキュアなAIエージェント活用技術の研究開発に参加。認証・認可などのセキュリティ技術を踏まえ、AIエージェントを安全に活用するための設計・実装・検証に取り組んだ。実環境への適用を意識したセキュリティ設計について理解を深めた。',
+        link: null,
+    },
+    {
+        date: '2026-08',
+        category: 'intern',
+        title: 'アクセンチュア株式会社｜和魂偉才塾 エンジニア塾',
+        description: '4日間のエンジニア向けインターンシップに参加。チームでのデータ分析・戦略立案からアルゴリズムの設計・実装、検証・改善まで一連の開発工程を経験。技術的な実装だけでなく、チームで課題を解決するための設計や意思決定について理解を深めた。',
+        link: null,
+    },
+    {
+        date: '2026-07',
+        category: 'intern',
+        title: '株式会社Speee｜3daysサマーインターンシップ',
+        description: '3日間のエンジニア向けサマーインターンシップに参加。初めてコードを書かないインターンを経験し、ユーザーや事業の課題分析から、要件定義、MVPの検討、システム設計まで取り組んだ。実装に着手する前の課題設定や事業理解の重要性を学び、ビジネス視点でのエンジニアリングについて理解を深めた。',
+        link: null,
+    },
+    {
         date: '2026-09',
+        endDate: '2026-10',
         category: 'intern',
         title: 'Sansan株式会社 インターン',
-        description: 'ContractOneの新機能開発を担当。ADRによる設計方針の整理からDB設計、実装まで一貫して取り組んでいます。',
-        dateLabel: '2026年9月～',
+        description: 'ContractOneの新機能開発を担当。ADRによる設計方針の整理からDB設計、実装まで一貫して取り組む。',
         link: null,
     },
     {
@@ -33,7 +55,8 @@ const ACTIVITIES = [
         endDate: '2026-07-31',
         category: 'intern',
         title: '株式会社CARTA HOLDINGS セキュリティエンジニア',
-        description: 'LLMと静的解析を組み合わせ、複数リポジトリを横断してセキュリティリスクを発見・評価・説明する診断ハーネスのPoCを研究開発。候補箇所の文脈整理、再現可能な検証手順の生成、事業・サービス・アーキテクチャ上の観点を含むトリアージレポート化に取り組みました。',
+        dateLabel: '2026年7月',
+        description: 'LLMと静的解析を組み合わせ、複数リポジトリを横断してセキュリティリスクを発見・評価・説明する診断ハーネスのPoCを研究開発。候補箇所の文脈整理、再現可能な検証手順の生成、事業・サービス・アーキテクチャ上の観点を含むトリアージレポート化に取り組んだ。',
         link: 'https://cartaholdings.co.jp/',
     },
     {
@@ -41,6 +64,7 @@ const ACTIVITIES = [
         endDate: '2026-05-31',
         category: 'intern',
         title: '株式会社プレイド Signalsチーム インターン',
+        dateLabel: '2025年12月 — 2026年5月',
         description: '半年間のインターンとして、KARTE SignalsのAI分析チャット開発に従事。Mastraを用いたワーキングメモリ機能をゼロから設計・実装し、プロンプト最適化、ツール使用状況・Reasoning表示、ハルシネーション抑制にフロントエンドからバックエンドまで一気通貫で取り組んだ。',
         link: 'https://tech.plaid.co.jp/intern-mastra-karte-signals-ai-chat-memory',
         linkLabel: '体験記を見る',
@@ -49,6 +73,7 @@ const ACTIVITIES = [
         date: '2025-10-27',
         category: 'intern',
         title: 'SCSKセキュリティ株式会社 インターン',
+        dateLabel: '2025年10月',
         description: '3日間のインターンシップに参加。脆弱性診断体験ワークやCTFに取り組み、実践的なセキュリティスキルを習得。',
         link: null,
     },
